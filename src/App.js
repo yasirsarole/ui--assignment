@@ -585,7 +585,7 @@ const ID = styled.span`
 const Event = styled.span`
   display: inline-flex;
   align-items: center;
-  flex-basis: 23.2%;
+  flex-basis: 25%;
 
   svg {
     font-size: 15px;
@@ -605,7 +605,7 @@ const Location = styled.span`
 `;
 
 const Attendees = styled.span`
-  flex-basis: 17%;
+  flex-basis: 15%;
 `;
 
 const ListEventsContainer = styled.ul`
@@ -636,7 +636,8 @@ const EventName = styled.span`
   color: rgb(95, 98, 101);
   font-weight: bold;
   font-size: 12px;
-  flex-basis: 23.2%;
+  flex-basis: 25%;
+  line-height: 1.2;
 `;
 
 const EventDate = styled.span`
@@ -675,7 +676,7 @@ const AttendeesContainer = styled.span`
   align-items: center;
   font-size: 11px;
   font-weight: bold;
-  flex-basis: 17%;
+  flex-basis: 15%;
 
   svg {
     font-size: 15px;
