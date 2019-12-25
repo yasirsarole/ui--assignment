@@ -1,27 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import eventsData from "./data";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>Here ui assignment will appear</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    console.log("componentDidMount", this._getEventsData());
+  }
+
+  // get events Data
+  _getEventsData = () => {
+    let data = eventsData;
+
+    // check if browser supports local storage
+    if (typeof Storage !== "undefined") {
+      localStorage.setItem("data", JSON.stringify(eventsData));
+
+      data = JSON.parse(localStorage.getItem("data"));
+    }
+
+    return data;
+  };
+
+  render() {
+    return (
+      <>
+        <header>
+          <div className="wrapper">
+            <span class="community">
+              community<span>manager</span>
+            </span>
+            <nav>
+              <ul>
+                <li>
+                  <a href="#Fixme">dashboard</a>
+                </li>
+                <li>
+                  <a href="#Fixme">events</a>
+                </li>
+                <li>
+                  <a href="#Fixme">facilities</a>
+                </li>
+                <li>
+                  <a href="#Fixme">news</a>
+                </li>
+                <li>
+                  <a href="#Fixme">maintenance</a>
+                </li>
+                <li>
+                  <a href="#Fixme">sign ins</a>
+                </li>
+                <li>
+                  <a href="#Fixme">users</a>
+                </li>
+                <li>
+                  <a href="#Fixme">settings</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+        <main>this is main</main>
+      </>
+    );
+  }
 }
 
 export default App;
