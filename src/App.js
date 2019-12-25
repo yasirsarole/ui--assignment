@@ -40,53 +40,69 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <header>
-          <div className="wrapper">
-            <span className="community">
-              community<span>manager</span>
-            </span>
-            <nav>
-              <ul>
-                <li>
+        <Header>
+          <Wrapper>
+            <CommunityHeading className="community">
+              community<CommunityHeading>manager</CommunityHeading>
+            </CommunityHeading>
+            <Navigation>
+              <NavListContainer>
+                <NavListItem>
                   <MdDashboard />
-                  <a href="#Fixme">dashboard</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">dashboard</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <MdEvent />
-                  <a href="#Fixme">events</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">events</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <FaStar />
-                  <a href="#Fixme">facilities</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">facilities</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <TiNews />
-                  <a href="#Fixme">news</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">news</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <GiScrewdriver />
-                  <a href="#Fixme">maintenance</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">maintenance</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <GoSignIn />
-                  <a href="#Fixme">sign ins</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">sign ins</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <FaUsers />
-                  <a href="#Fixme">users</a>
-                </li>
-                <li>
+                  <NavItem href="#Fixme">users</NavItem>
+                </NavListItem>
+                <NavListItem>
                   <MdSettings />
-                  <a href="#Fixme">settings</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </header>
-        <main>this is main</main>
+                  <NavItem href="#Fixme">settings</NavItem>
+                </NavListItem>
+              </NavListContainer>
+            </Navigation>
+          </Wrapper>
+        </Header>
+        <Main>this is main</Main>
       </>
     );
   }
 }
+
+const Wrapper = styled.div``;
+
+const Header = styled.header``;
+
+const Main = styled.main``;
+
+const CommunityHeading = styled.span``;
+
+const Navigation = styled.nav``;
+
+const NavListContainer = styled.ul``;
+
+const NavListItem = styled.li``;
+
+const NavItem = styled.a``;
 
 export default App;
