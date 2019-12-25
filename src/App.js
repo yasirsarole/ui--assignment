@@ -101,11 +101,11 @@ class App extends React.Component {
                   )}
                 </AttendeesContainer>
                 <FeedBackEditContainer>
-                  <Feedback>feedback</Feedback>
-                  <EditIconContainer>
+                  <Feedback>Feedback</Feedback>
+                  <EditIconContainer title="Edit Event">
                     <MdEdit />
                   </EditIconContainer>
-                  <DeleteIconContainer>
+                  <DeleteIconContainer title="Delete Event">
                     <FiMinus />
                   </DeleteIconContainer>
                 </FeedBackEditContainer>
@@ -246,6 +246,7 @@ class App extends React.Component {
 
 const MainContainer = styled.div`
   height: 100vh;
+  overflow-y: hidden;
   font-family: sans-serif;
   letter-spacing: normal;
   font-weight: normal;
@@ -476,6 +477,7 @@ const PlusIconContainer = styled.div`
 
 const ListContainerSubHeader = styled.div`
   padding: 24px 0 0 3.3%;
+  margin-bottom: 13px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -552,13 +554,28 @@ const SubHeaderIconsContainerSingle = styled.div`
   }
 `;
 
-const TableContainer = styled.div``;
+const TableContainer = styled.div`
+  padding-left: 3.3%;
+`;
 
-const TableHeader = styled.div``;
+const TableHeader = styled.div`
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  color: rgb(142, 154, 162);
+  font-size: 11px;
+  text-transform: capitalize;
+  font-weight: bold;
+`;
 
-const ID = styled.span``;
+const ID = styled.span`
+  text-transform: uppercase;
+`;
 
-const Event = styled.span``;
+const Event = styled.span`
+  display: inline-flex;
+  align-items: center;
+`;
 
 const Date = styled.span``;
 
@@ -568,35 +585,103 @@ const Location = styled.span``;
 
 const Attendees = styled.span``;
 
-const ListEventsContainer = styled.ul``;
+const ListEventsContainer = styled.ul`
+  overflow-y: auto;
+  height: calc(100vh - 153px);
+  position: relative;
+  left: 15px;
+`;
 
-const ListEvent = styled.li``;
+const ListEvent = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-const EventId = styled.span``;
+const EventId = styled.span`
+  color: rgb(169, 178, 185);
+  font-size: 11px;
+  font-weight: bold;
+`;
 
-const EventName = styled.span``;
+const EventName = styled.span`
+  color: rgb(95, 98, 101);
+  font-weight: bold;
+  font-size: 12px;
+`;
 
-const EventDate = styled.span``;
+const EventDate = styled.span`
+  color: rgb(146, 155, 174);
+  font-size: 11px;
+  font-weight: bold;
+`;
 
-const EventDateContainer = styled.span``;
+const EventDateContainer = styled.span`
+  display: block;
+`;
 
-const EventTimeContainer = styled.span``;
+const EventTimeContainer = styled.span`
+  display: block;
+`;
 
-const RepeatsContainer = styled.span``;
+const RepeatsContainer = styled.span`
+  color: rgb(110, 123, 147);
+  font-size: 11px;
+  font-weight: bold;
+`;
 
-const LocationContainer = styled.span``;
+const LocationContainer = styled.span`
+  color: rgb(164, 172, 187);
+  font-size: 11px;
+  font-weight: bold;
+`;
 
-const AttendeesContainer = styled.span``;
+const AttendeesContainer = styled.span`
+  color: rgb(133, 149, 178);
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: bold;
 
-const AttendeesFull = styled.span``;
+  svg {
+    font-size: 15px;
+  }
+`;
+
+const AttendeesFull = styled.span`
+  padding: 4px 8px;
+  text-transform: uppercase;
+  background: rgb(49, 39, 136);
+  color: #fff;
+  border-radius: 2px;
+  font-size: 10px;
+`;
 
 const FeedBackEditContainer = styled.span``;
 
-const Feedback = styled.span``;
+const Feedback = styled.span`
+  font-size: 11px;
+  font-weight: bold;
+  color: rgb(118, 103, 243);
+`;
 
-const EditIconContainer = styled.div``;
+const EditIconContainer = styled.div`
+  color: rgb(118, 103, 243);
+  cursor: pointer;
+`;
 
-const DeleteIconContainer = styled.div``;
+const DeleteIconContainer = styled.div`
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  background: rgb(116, 101, 243);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 13px;
+  justify-content: center;
+  cursor: pointer;
+`;
 
 const ListContainerTable = styled.div``;
 
