@@ -70,50 +70,50 @@ class App extends React.Component {
     const currentData = this._getEventsData();
 
     return (
-      <div className="TableContainer">
-        <div className="TableHeader">
-          <span className="ID">id</span>
-          <span className="Event">
+      <TableContainer>
+        <TableHeader>
+          <ID>id</ID>
+          <Event>
             event <MdKeyboardArrowDown />
-          </span>
-          <span className="Date">date</span>
-          <span className="Repeats">repeats</span>
-          <span className="Location">location</span>
-          <span className="Attendees">attendees</span>
-        </div>
-        <ul className="ListEventsContainer">
+          </Event>
+          <Date>date</Date>
+          <Repeats>repeats</Repeats>
+          <Location>location</Location>
+          <Attendees>attendees</Attendees>
+        </TableHeader>
+        <ListEventsContainer>
           {currentData.current.map((data, index) => {
             return (
-              <li key={index} className="ListEvent">
-                <span className="EventId">{index}</span>
-                <span className="EventName">{data.name}</span>
-                <span className="EventDate">
-                  <span className="EventDateContainer">{data.date}</span>
-                  <span className="EventTimeContainer">{data.time}</span>
-                </span>
-                <span className="RepeatsContainer">{data.repeats}</span>
-                <span className="LocationContainer">{data.location}</span>
-                <span className="AttendeesContainer">
+              <ListEvent key={index}>
+                <EventId>{index}</EventId>
+                <EventName>{data.name}</EventName>
+                <EventDate>
+                  <EventDateContainer>{data.date}</EventDateContainer>
+                  <EventTimeContainer>{data.time}</EventTimeContainer>
+                </EventDate>
+                <RepeatsContainer>{data.repeats}</RepeatsContainer>
+                <LocationContainer>{data.location}</LocationContainer>
+                <AttendeesContainer>
                   <IoMdMan />
                   {`${data.allowedAttendees}/${data.totalAttendees}`}
                   {data.allowedAttendees === data.totalAttendees && (
-                    <span className="AttendeesFull">full</span>
+                    <AttendeesFull>full</AttendeesFull>
                   )}
-                </span>
-                <span className="FeedBackEditContainer">
-                  <span className="Feedback">feedback</span>
-                  <div className="EditIconContainer">
+                </AttendeesContainer>
+                <FeedBackEditContainer>
+                  <Feedback>feedback</Feedback>
+                  <EditIconContainer>
                     <MdEdit />
-                  </div>
-                  <div className="DeleteIconContainer">
+                  </EditIconContainer>
+                  <DeleteIconContainer>
                     <FiMinus />
-                  </div>
-                </span>
-              </li>
+                  </DeleteIconContainer>
+                </FeedBackEditContainer>
+              </ListEvent>
             );
           })}
-        </ul>
-      </div>
+        </ListEventsContainer>
+      </TableContainer>
     );
   };
 
@@ -122,7 +122,7 @@ class App extends React.Component {
       <MainContainer>
         <Wrapper>
           <Header>
-            <CommunityHeading className="community">
+            <CommunityHeading>
               community<CommunityHeading>manager</CommunityHeading>
             </CommunityHeading>
             <Navigation>
@@ -232,9 +232,9 @@ class App extends React.Component {
                   </SubHeaderIconsContainer>
                 </ListSideMenuContainer>
               </ListContainerSubHeader>
-              <div className="ListContainerTable">
+              <ListContainerTable>
                 {this._listContainerTable()}
-              </div>
+              </ListContainerTable>
             </EventsListContainer>
           </Main>
         </Wrapper>
@@ -360,5 +360,7 @@ const Feedback = styled.span``;
 const EditIconContainer = styled.div``;
 
 const DeleteIconContainer = styled.div``;
+
+const ListContainerTable = styled.div``;
 
 export default App;
