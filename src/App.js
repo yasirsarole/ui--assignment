@@ -171,9 +171,9 @@ class App extends React.Component {
               <MainEventsMenu>
                 <EventsTitle>events</EventsTitle>
                 <EventsMenu>
-                  <EventsMenuList>
+                  <EventsMenuList className="active">
                     <EventsNumber>{this.state.totalEvents}</EventsNumber>
-                    <EventDesc>events</EventDesc>
+                    <EventDesc>Events</EventDesc>
                   </EventsMenuList>
                   <EventsMenuList>
                     <EventsNumber>{this.state.upcomingEvents}</EventsNumber>
@@ -244,9 +244,11 @@ class App extends React.Component {
 }
 
 const MainContainer = styled.div`
+  height: 100vh;
   font-family: sans-serif;
   letter-spacing: normal;
   font-weight: normal;
+  line-height: 1;
 `;
 
 const Wrapper = styled.div`
@@ -263,6 +265,7 @@ const Header = styled.header`
 
 const Main = styled.main`
   flex-basis: 86.5%;
+  display: inline-flex;
 `;
 
 const CommunityHeading = styled.span`
@@ -279,7 +282,10 @@ const CommunityHeading = styled.span`
   }
 `;
 
-const Navigation = styled.nav``;
+const Navigation = styled.nav`
+  height: calc(100vh - 86px);
+  position: relative;
+`;
 
 const NavListContainer = styled.ul``;
 
@@ -291,6 +297,8 @@ const NavListItem = styled.li`
 
   &:last-of-type {
     margin-bottom: 0;
+    position: absolute;
+    bottom: 24px;
   }
 
   &:hover,
@@ -328,27 +336,74 @@ const NavItem = styled.a`
   text-decoration: none;
 `;
 
-const NewEventPanel = styled.div``;
+const NewEventPanel = styled.div`
+  padding: 23px 0;
+  flex-basis: 17.5%;
+  background: rgb(241, 244, 249);
+  box-shadow: inset 0px 0px 87px -70px rgba(0, 0, 0, 1);
+`;
 
-const AddEvent = styled.div``;
+const AddEvent = styled.div`
+  padding: 0px 16% 19px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(50, 65, 101);
+`;
 
-const NewEventTitle = styled.span``;
+const NewEventTitle = styled.span`
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  display: inline-block;
+`;
 
 const MainEventsMenu = styled.div``;
 
-const EventsTitle = styled.span``;
+const EventsTitle = styled.span`
+  display: inline-block;
+  margin-bottom: 26px;
+  padding: 0 15%;
+  text-transform: capitalize;
+  font-size: 25px;
+`;
 
 const EventsMenu = styled.ul``;
 
-const EventsMenuList = styled.li``;
+const EventsMenuList = styled.li`
+  padding: 23px 0 23px 10%;
+  margin-left: 12px;
+  cursor: pointer;
 
-const EventsNumber = styled.span``;
+  &.active {
+    background: #fff;
+  }
+`;
 
-const EventDesc = styled.span``;
+const EventsNumber = styled.span`
+  font-size: 20px;
+  margin-bottom: 14px;
+  display: block;
+`;
 
-const EventsListContainer = styled.div``;
+const EventDesc = styled.span`
+  font-weight: bold;
+  font-size: 12px;
+  display: block;
+  color: rgb(119, 130, 158);
+`;
 
-const ListContainerHeader = styled.div``;
+const EventsListContainer = styled.div`
+  flex-basis: 82.4%;
+`;
+
+const ListContainerHeader = styled.div`
+display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
 
 const SearchIconContainer = styled.div``;
 
