@@ -131,7 +131,7 @@ class App extends React.Component {
                   <MdDashboard />
                   <NavItem href="#Fixme">dashboard</NavItem>
                 </NavListItem>
-                <NavListItem>
+                <NavListItem className="active">
                   <MdEvent />
                   <NavItem href="#Fixme">events</NavItem>
                 </NavListItem>
@@ -243,23 +243,90 @@ class App extends React.Component {
   }
 }
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+  font-family: sans-serif;
+  letter-spacing: normal;
+  font-weight: normal;
+`;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 96%;
+  max-width: 1127px;
+  margin: 0 auto;
+  display: flex;
+`;
 
-const Header = styled.header``;
+const Header = styled.header`
+  padding-top: 21px;
+  flex-basis: 13.3%;
+`;
 
-const Main = styled.main``;
+const Main = styled.main`
+  flex-basis: 86.5%;
+`;
 
-const CommunityHeading = styled.span``;
+const CommunityHeading = styled.span`
+  color: rgb(119, 130, 158);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  display: inline-block;
+  margin-bottom: 55px;
+
+  span {
+    color: rgb(50, 65, 101);
+    margin-bottom: 0;
+  }
+`;
 
 const Navigation = styled.nav``;
 
 const NavListContainer = styled.ul``;
 
-const NavListItem = styled.li``;
+const NavListItem = styled.li`
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  position: relative;
 
-const NavItem = styled.a``;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &:hover,
+  &.active {
+    a,
+    svg {
+      color: rgb(50, 65, 101);
+      font-weight: bold;
+    }
+
+    &::before {
+      content: "";
+      width: 3px;
+      height: 3px;
+      background-color: rgb(50, 65, 101);
+      border-radius: 50%;
+      position: absolute;
+      z-index: 5;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  svg {
+    color: rgb(119, 130, 158);
+  }
+`;
+
+const NavItem = styled.a`
+  margin-left: 15px;
+  color: rgb(119, 130, 158);
+  text-transform: capitalize;
+  font-size: 12px;
+  text-decoration: none;
+`;
 
 const NewEventPanel = styled.div``;
 
