@@ -101,7 +101,7 @@ class App extends React.Component {
                   )}
                 </AttendeesContainer>
                 <FeedBackEditContainer>
-                  <Feedback>Feedback</Feedback>
+                  <Feedback title="Event Feedback">Feedback</Feedback>
                   <EditIconContainer title="Edit Event">
                     <MdEdit />
                   </EditIconContainer>
@@ -171,15 +171,15 @@ class App extends React.Component {
               <MainEventsMenu>
                 <EventsTitle>events</EventsTitle>
                 <EventsMenu>
-                  <EventsMenuList className="active">
+                  <EventsMenuList title="Total Events" className="active">
                     <EventsNumber>{this.state.totalEvents}</EventsNumber>
                     <EventDesc>Events</EventDesc>
                   </EventsMenuList>
-                  <EventsMenuList>
+                  <EventsMenuList title="Upcoming Events">
                     <EventsNumber>{this.state.upcomingEvents}</EventsNumber>
                     <EventDesc>Upcoming events</EventDesc>
                   </EventsMenuList>
-                  <EventsMenuList>
+                  <EventsMenuList title="Outdated Events">
                     <EventsNumber>{this.state.outDatedEvents}</EventsNumber>
                     <EventDesc>Outdated events</EventDesc>
                   </EventsMenuList>
@@ -224,7 +224,10 @@ class App extends React.Component {
                     <SubHeaderIconsContainerSingle title="Calendar">
                       <FaRegCalendar />
                     </SubHeaderIconsContainerSingle>
-                    <SubHeaderIconsContainerSingle title="List View">
+                    <SubHeaderIconsContainerSingle
+                      className="active"
+                      title="List View"
+                    >
                       <MdFormatListBulleted />
                     </SubHeaderIconsContainerSingle>
                     <SubHeaderIconsContainerSingle title="Grid View">
@@ -549,6 +552,12 @@ const SubHeaderIconsContainerSingle = styled.div`
   margin-right: 10px;
   cursor: pointer;
 
+  &.active {
+    svg {
+      color: rgb(117, 102, 243);
+    }
+  }
+
   &:last-of-type {
     margin-right: 0;
   }
@@ -570,54 +579,76 @@ const TableHeader = styled.div`
 
 const ID = styled.span`
   text-transform: uppercase;
+  flex-basis: 4.5%;
 `;
 
 const Event = styled.span`
   display: inline-flex;
   align-items: center;
+  flex-basis: 23.2%;
+
+  svg {
+    font-size: 15px;
+  }
 `;
 
-const Date = styled.span``;
+const Date = styled.span`
+  flex-basis: 16.7%;
+`;
 
-const Repeats = styled.span``;
+const Repeats = styled.span`
+  flex-basis: 8.6%;
+`;
 
-const Location = styled.span``;
+const Location = styled.span`
+  flex-basis: 17.1%;
+`;
 
-const Attendees = styled.span``;
+const Attendees = styled.span`
+  flex-basis: 17%;
+`;
 
 const ListEventsContainer = styled.ul`
+  background: rgb(246, 247, 251);
   overflow-y: auto;
+  width: calc(100% + 15px);
   height: calc(100vh - 153px);
   position: relative;
-  left: 15px;
+  box-shadow: 0px 0px 59px -42px rgba(0, 0, 0, 0.65);
 `;
 
 const ListEvent = styled.li`
+  background: #fff;
+  padding: 15px 15px 15px 20px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const EventId = styled.span`
   color: rgb(169, 178, 185);
   font-size: 11px;
   font-weight: bold;
+  flex-basis: 4.5%;
 `;
 
 const EventName = styled.span`
   color: rgb(95, 98, 101);
   font-weight: bold;
   font-size: 12px;
+  flex-basis: 23.2%;
 `;
 
 const EventDate = styled.span`
   color: rgb(146, 155, 174);
   font-size: 11px;
   font-weight: bold;
+  flex-basis: 16.7%;
 `;
 
 const EventDateContainer = styled.span`
   display: block;
+  margin-bottom: 7px;
 `;
 
 const EventTimeContainer = styled.span`
@@ -628,12 +659,14 @@ const RepeatsContainer = styled.span`
   color: rgb(110, 123, 147);
   font-size: 11px;
   font-weight: bold;
+  flex-basis: 8.6%;
 `;
 
 const LocationContainer = styled.span`
   color: rgb(164, 172, 187);
   font-size: 11px;
   font-weight: bold;
+  flex-basis: 17.1%;
 `;
 
 const AttendeesContainer = styled.span`
@@ -642,6 +675,7 @@ const AttendeesContainer = styled.span`
   align-items: center;
   font-size: 11px;
   font-weight: bold;
+  flex-basis: 17%;
 
   svg {
     font-size: 15px;
@@ -650,6 +684,7 @@ const AttendeesContainer = styled.span`
 
 const AttendeesFull = styled.span`
   padding: 4px 8px;
+  margin-left: 12%;
   text-transform: uppercase;
   background: rgb(49, 39, 136);
   color: #fff;
@@ -657,17 +692,26 @@ const AttendeesFull = styled.span`
   font-size: 10px;
 `;
 
-const FeedBackEditContainer = styled.span``;
+const FeedBackEditContainer = styled.span`
+  display: inline-flex;
+  align-items: center;
+  flex-basis: 13.3%;
+`;
 
 const Feedback = styled.span`
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   color: rgb(118, 103, 243);
+  cursor: pointer;
+  margin-right: 11%;
 `;
 
 const EditIconContainer = styled.div`
   color: rgb(118, 103, 243);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 11%;
 `;
 
 const DeleteIconContainer = styled.div`
@@ -676,7 +720,7 @@ const DeleteIconContainer = styled.div`
   display: inline-flex;
   align-items: center;
   background: rgb(116, 101, 243);
-  border-radius: 50%;
+  border-radius: 100%;
   color: #fff;
   font-size: 13px;
   justify-content: center;
