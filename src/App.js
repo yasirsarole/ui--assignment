@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import styled from "styled-components";
 import eventsData from "./data";
+import DatePicker from "react-date-picker";
 
 // import icons
 import {
@@ -29,7 +30,9 @@ class App extends React.Component {
     listData: [],
     all: false,
     upcoming: false,
-    outdated: false
+    outdated: false,
+    showModalForm: true,
+    date: new window.Date()
   };
 
   componentDidMount() {
@@ -129,6 +132,19 @@ class App extends React.Component {
     });
   };
 
+  // add new event
+  _addNewEvent = () => {
+    this.setState({
+      showModalForm: true
+    });
+  };
+
+  // on date change
+  // _onDateChange = date => {
+  //   console.log("heeeeeeeeeeeeeeeeelo");
+  //   date => this.setState({ date });
+  // };
+
   // get events list based on filter
   _listContainerTable = () => {
     return (
@@ -182,6 +198,39 @@ class App extends React.Component {
   render() {
     return (
       <MainContainer>
+        {this.state.showModalForm && (
+          <ModalContainer>
+            <AddEventForm onSubmit={e => e.preventDefault()}>
+              <EventNameContainer>
+                <NameLabel htmlFor="name">event name</NameLabel>
+                <NameInput id="name" type="text" />
+              </EventNameContainer>
+              <EventDateModal>
+                <DatePicker
+                  // onChange={date => this._onDateChange(date)}
+                  value={this.state.date}
+                />
+              </EventDateModal>
+              <EventLocation>
+                <LocationLabel htmlFor="location">location</LocationLabel>
+                <LocationInput id="location" type="text" />
+              </EventLocation>
+              <EventCapacity>
+                <EventCapacityLabel htmlFor="capacity">
+                  capacity
+                </EventCapacityLabel>
+                <EventCapacityInput id="capacity" type="number" />
+              </EventCapacity>
+              <EventAttendees>
+                <EventAttendeesLabel htmlFor="attendees">
+                  attendees
+                </EventAttendeesLabel>
+                <EventAttendeesInput id="attendees" type="number" />
+              </EventAttendees>
+              <SubmitButton type="submit" value="Submit" />
+            </AddEventForm>
+          </ModalContainer>
+        )}
         <Wrapper>
           <Header>
             <Hamburger>
@@ -242,7 +291,10 @@ class App extends React.Component {
           </Header>
           <Main>
             <NewEventPanel>
-              <AddEvent title="Add New Event">
+              <AddEvent
+                onClick={() => this._addNewEvent()}
+                title="Add New Event"
+              >
                 <NewEventTitle>new event</NewEventTitle>
                 <FiPlus />
               </AddEvent>
@@ -304,7 +356,7 @@ class App extends React.Component {
               <ListContainerSubHeader>
                 <SearchFormContainer title="Search Events">
                   <FiSearch />
-                  <SearchForm>
+                  <SearchForm onSubmit={e => e.preventDefault()}>
                     <SearchEvents placeholder="Search events" type="text" />
                   </SearchForm>
                 </SearchFormContainer>
@@ -1003,6 +1055,101 @@ const InActiveContainer = styled.div`
 `;
 
 const ActiveContainer = styled.div`
+  cursor: pointer;
+`;
+
+const ModalContainer = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+`;
+
+const AddEventForm = styled.form`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  padding: 22px;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+
+  label,
+  input {
+    color: rgb(119, 130, 158);
+    text-transform: capitalize;
+    font-size: 12px;
+  }
+
+  label {
+    margin-right: 11px;
+  }
+`;
+
+const EventNameContainer = styled.div`
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const NameLabel = styled.label``;
+
+const NameInput = styled.input``;
+
+const EventDateModal = styled.div`
+  margin-bottom: 15px;
+
+  .react-date-picker,
+  .react-date-picker__wrapper {
+    width: 100%;
+  }
+
+  .react-date-picker__calendar {
+    width: 300px !important;
+    left: -22px !important;
+  }
+`;
+
+const EventLocation = styled.div`
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const LocationLabel = styled.label``;
+
+const LocationInput = styled.input``;
+
+const EventCapacity = styled.div`
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const EventCapacityLabel = styled.label``;
+
+const EventCapacityInput = styled.input``;
+
+const EventAttendees = styled.div`
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const EventAttendeesLabel = styled.label``;
+
+const EventAttendeesInput = styled.input``;
+
+const SubmitButton = styled.input`
+  border: none;
+  width: 100%;
+  padding: 8px;
+  border-radius: 3px;
   cursor: pointer;
 `;
 
