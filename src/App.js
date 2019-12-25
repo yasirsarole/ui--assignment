@@ -10,11 +10,12 @@ import {
   MdSettings,
   MdKeyboardArrowDown,
   MdFormatListBulleted,
-  MdEdit
+  MdEdit,
+  MdClose
 } from "react-icons/md";
 import { FaStar, FaUsers, FaBell, FaRegCalendar } from "react-icons/fa";
 import { TiNews } from "react-icons/ti";
-import { GiScrewdriver } from "react-icons/gi";
+import { GiScrewdriver, GiHamburgerMenu } from "react-icons/gi";
 import { GoSignIn } from "react-icons/go";
 import { IoMdMan } from "react-icons/io";
 import { FiPlus, FiSearch, FiGrid, FiMinus } from "react-icons/fi";
@@ -23,13 +24,31 @@ class App extends React.Component {
   state = {
     totalEvents: 0,
     upcomingEvents: 0,
-    outDatedEvents: 0
+    outDatedEvents: 0,
+    hamburgerActive: true
   };
 
   componentDidMount() {
     // get events data count
     this._geteventsDataCount();
+
+    // hamburgerActive when window width is greater than 1024
+    this._updateHamburgerState();
+    window.addEventListener("resize", this._updateHamburgerState);
   }
+
+  // hamburgerActive when window width is greater than 1024
+  _updateHamburgerState = () => {
+    if (window.innerWidth > 1024) {
+      this.setState({
+        hamburgerActive: true
+      });
+    } else {
+      this.setState({
+        hamburgerActive: false
+      });
+    }
+  };
 
   // get events Data
   _getEventsData = () => {
@@ -62,6 +81,13 @@ class App extends React.Component {
       totalEvents: currentEventCount + UpcomingCount + OutdatedCount,
       upcomingEvents: UpcomingCount,
       outDatedEvents: OutdatedCount
+    });
+  };
+
+  // helper function for hamburger open close
+  _hamburgerToggle = () => {
+    this.setState({
+      hamburgerActive: !this.state.hamburgerActive
     });
   };
 
@@ -122,45 +148,61 @@ class App extends React.Component {
       <MainContainer>
         <Wrapper>
           <Header>
-            <CommunityHeading>
-              community<CommunityHeading>manager</CommunityHeading>
-            </CommunityHeading>
-            <Navigation>
-              <NavListContainer>
-                <NavListItem>
-                  <MdDashboard />
-                  <NavItem href="#Fixme">dashboard</NavItem>
-                </NavListItem>
-                <NavListItem className="active">
-                  <MdEvent />
-                  <NavItem href="#Fixme">events</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <FaStar />
-                  <NavItem href="#Fixme">facilities</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <TiNews />
-                  <NavItem href="#Fixme">news</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <GiScrewdriver />
-                  <NavItem href="#Fixme">maintenance</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <GoSignIn />
-                  <NavItem href="#Fixme">sign ins</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <FaUsers />
-                  <NavItem href="#Fixme">users</NavItem>
-                </NavListItem>
-                <NavListItem>
-                  <MdSettings />
-                  <NavItem href="#Fixme">settings</NavItem>
-                </NavListItem>
-              </NavListContainer>
-            </Navigation>
+            <Hamburger>
+              {!this.state.hamburgerActive && (
+                <InActiveContainer onClick={() => this._hamburgerToggle()}>
+                  <GiHamburgerMenu />
+                </InActiveContainer>
+              )}
+              {this.state.hamburgerActive && (
+                <ActiveContainer onClick={() => this._hamburgerToggle()}>
+                  <MdClose />
+                </ActiveContainer>
+              )}
+            </Hamburger>
+            {this.state.hamburgerActive && (
+              <>
+                <CommunityHeading>
+                  community<CommunityHeading>manager</CommunityHeading>
+                </CommunityHeading>
+                <Navigation>
+                  <NavListContainer>
+                    <NavListItem>
+                      <MdDashboard />
+                      <NavItem href="#Fixme">dashboard</NavItem>
+                    </NavListItem>
+                    <NavListItem className="active">
+                      <MdEvent />
+                      <NavItem href="#Fixme">events</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <FaStar />
+                      <NavItem href="#Fixme">facilities</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <TiNews />
+                      <NavItem href="#Fixme">news</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <GiScrewdriver />
+                      <NavItem href="#Fixme">maintenance</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <GoSignIn />
+                      <NavItem href="#Fixme">sign ins</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <FaUsers />
+                      <NavItem href="#Fixme">users</NavItem>
+                    </NavListItem>
+                    <NavListItem>
+                      <MdSettings />
+                      <NavItem href="#Fixme">settings</NavItem>
+                    </NavListItem>
+                  </NavListContainer>
+                </Navigation>
+              </>
+            )}
           </Header>
           <Main>
             <NewEventPanel>
@@ -254,6 +296,10 @@ const MainContainer = styled.div`
   letter-spacing: normal;
   font-weight: normal;
   line-height: 1;
+
+  @media (max-width: 1024px) {
+    overflow-y: auto;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -261,11 +307,19 @@ const Wrapper = styled.div`
   max-width: 1127px;
   margin: 0 auto;
   display: flex;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
 `;
 
 const Header = styled.header`
   padding-top: 21px;
   flex-basis: 13.3%;
+
+  @media (max-width: 1024px) {
+    text-align: center;
+  }
 `;
 
 const Main = styled.main`
@@ -281,6 +335,10 @@ const CommunityHeading = styled.span`
   display: inline-block;
   margin-bottom: 55px;
 
+  @media (max-width: 1024px) {
+    margin-bottom: 30px;
+  }
+
   span {
     color: rgb(117, 102, 243);
     margin-bottom: 0;
@@ -290,9 +348,17 @@ const CommunityHeading = styled.span`
 const Navigation = styled.nav`
   height: calc(100vh - 86px);
   position: relative;
+
+  @media (max-width: 1024px) {
+    height: auto;
+  }
 `;
 
-const NavListContainer = styled.ul``;
+const NavListContainer = styled.ul`
+  @media (max-width: 1024px) {
+    display: inline-block;
+  }
+`;
 
 const NavListItem = styled.li`
   margin-bottom: 18px;
@@ -304,6 +370,10 @@ const NavListItem = styled.li`
     margin-bottom: 0;
     position: absolute;
     bottom: 24px;
+
+    @media (max-width: 1024px) {
+      position: unset;
+    }
   }
 
   &:hover,
@@ -729,5 +799,26 @@ const DeleteIconContainer = styled.div`
 `;
 
 const ListContainerTable = styled.div``;
+
+const Hamburger = styled.div`
+  display: none;
+  margin-bottom: 10px;
+  color: rgb(117, 102, 243);
+  font-size: 30px;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const InActiveContainer = styled.div`
+  cursor: pointer;
+`;
+
+const ActiveContainer = styled.div`
+  cursor: pointer;
+`;
 
 export default App;
