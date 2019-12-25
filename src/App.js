@@ -111,7 +111,7 @@ class App extends React.Component {
           {currentData.current.map((data, index) => {
             return (
               <ListEvent key={index}>
-                <EventId>{index}</EventId>
+                <EventId>{index + 1}</EventId>
                 <EventName>{data.name}</EventName>
                 <EventDate>
                   <EventDateContainer>{data.date}</EventDateContainer>
@@ -518,6 +518,11 @@ const ListContainerHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding-left: 0;
+  }
 `;
 
 const SearchIconContainer = styled.div`
@@ -526,10 +531,20 @@ const SearchIconContainer = styled.div`
   svg {
     color: rgb(119, 130, 158);
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 5px;
+  }
 `;
 
 const ProfileInfo = styled.div`
   display: inline-flex;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const UserName = styled.span`
@@ -591,6 +606,11 @@ const ListContainerSubHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding: 14px 0 0 0;
+  }
 `;
 
 const SearchFormContainer = styled.div`
@@ -599,6 +619,11 @@ const SearchFormContainer = styled.div`
 
   svg {
     color: rgb(119, 130, 158);
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    margin-bottom: 10px;
   }
 `;
 
@@ -624,6 +649,12 @@ const SearchEvents = styled.input`
 const ListSideMenuContainer = styled.div`
   display: inline-flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
 `;
 
 const ShowAll = styled.div`
@@ -672,6 +703,10 @@ const SubHeaderIconsContainerSingle = styled.div`
 
 const TableContainer = styled.div`
   padding-left: 3.3%;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 const TableHeader = styled.div`
@@ -682,6 +717,18 @@ const TableHeader = styled.div`
   font-size: 11px;
   text-transform: capitalize;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding: 10px;
+  }
+
+  span {
+    @media (max-width: 768px) {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
 `;
 
 const ID = styled.span`
@@ -696,6 +743,11 @@ const Event = styled.span`
 
   svg {
     font-size: 15px;
+  }
+
+  @media (max-width: 768px) {
+    display: flex !important;
+    align-items: center;
   }
 `;
 
@@ -735,6 +787,20 @@ const ListEvent = styled.li`
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding: 10px;
+  }
+
+  & > span {
+    @media (max-width: 768px) {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+  }
 `;
 
 const EventId = styled.span`
@@ -757,15 +823,27 @@ const EventDate = styled.span`
   font-size: 11px;
   font-weight: bold;
   flex-basis: 16.7%;
+
+  @media (max-width: 768px) {
+    display: block !important;
+  }
 `;
 
 const EventDateContainer = styled.span`
   display: block;
   margin-bottom: 7px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 3px;
+  }
 `;
 
 const EventTimeContainer = styled.span`
   display: block;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0;
+  }
 `;
 
 const RepeatsContainer = styled.span`
@@ -803,6 +881,10 @@ const AttendeesFull = styled.span`
   color: #fff;
   border-radius: 2px;
   font-size: 10px;
+
+  @media (max-width: 768px) {
+    margin-left: 25px;
+  }
 `;
 
 const FeedBackEditContainer = styled.span`
@@ -817,6 +899,10 @@ const Feedback = styled.span`
   color: rgb(118, 103, 243);
   cursor: pointer;
   margin-right: 11%;
+
+  @media (max-width: 768px) {
+    margin-right: 25px;
+  }
 `;
 
 const EditIconContainer = styled.div`
@@ -825,6 +911,10 @@ const EditIconContainer = styled.div`
   display: inline-flex;
   align-items: center;
   margin-right: 11%;
+
+  @media (max-width: 768px) {
+    margin-right: 25px;
+  }
 `;
 
 const DeleteIconContainer = styled.div`
