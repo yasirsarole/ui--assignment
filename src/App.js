@@ -22,33 +22,41 @@ import { IoMdMan } from "react-icons/io";
 import { FiPlus, FiSearch, FiGrid, FiMinus } from "react-icons/fi";
 
 class App extends React.Component {
-  state = {
-    totalEvents: 0,
-    upcomingEvents: 0,
-    outDatedEvents: 0,
-    hamburgerActive: true,
-    listData: [],
-    all: false,
-    upcoming: false,
-    outdated: false,
-    showModalForm: false,
-    date: new window.Date(),
-    modalFormError: false,
-    errorMessage: "All the fields are compulsory.",
-    eventDetail: {
-      eventName: "",
-      eventLocation: "",
-      eventCapacity: "",
-      eventAttendees: 0
-    },
-    eventsListData: JSON.parse(localStorage.getItem("data"))
-  };
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
     // check if browser supports local storage
     if (typeof Storage !== "undefined")
       localStorage.setItem("data", JSON.stringify(eventsData));
 
+    this.state = {
+      totalEvents: 0,
+      upcomingEvents: 0,
+      outDatedEvents: 0,
+      hamburgerActive: true,
+      listData: [],
+      all: false,
+      upcoming: false,
+      outdated: false,
+      showModalForm: false,
+      date: new window.Date("YYYY-MM-DDTHH:mm:ss:sssZ"),
+      modalFormError: false,
+      errorMessage: "All the fields are compulsory.",
+      eventDetail: {
+        eventName: "",
+        eventLocation: "",
+        eventCapacity: "",
+        eventAttendees: 0
+      },
+      eventsListData: JSON.parse(localStorage.getItem("data")),
+      addEvent: false,
+      editEvent: false,
+      deleteEvent: false,
+      currentEventID: ""
+    };
+  }
+
+  componentDidMount() {
     // get events data count
     this._geteventsDataCount();
 
@@ -87,15 +95,19 @@ class App extends React.Component {
   // get count for total, upcoming and outdated events
   _geteventsDataCount = () => {
     const currentData = this._getEventsData();
-    const currentEventCount = Array.isArray(currentData.current)
-      ? currentData.current.length
-      : 0;
-    const UpcomingCount = Array.isArray(currentData.upcoming)
-      ? currentData.upcoming.length
-      : 0;
-    const OutdatedCount = Array.isArray(currentData.outdated)
-      ? currentData.outdated.length
-      : 0;
+
+    const currentEventCount =
+      currentData && Array.isArray(currentData.current)
+        ? currentData.current.length
+        : 0;
+    const UpcomingCount =
+      currentData && Array.isArray(currentData.upcoming)
+        ? currentData.upcoming.length
+        : 0;
+    const OutdatedCount =
+      currentData && Array.isArray(currentData.outdated)
+        ? currentData.outdated.length
+        : 0;
 
     this.setState({
       totalEvents: currentEventCount + UpcomingCount + OutdatedCount,
@@ -145,7 +157,10 @@ class App extends React.Component {
   // add new event
   _addNewEvent = () => {
     this.setState({
-      showModalForm: true
+      showModalForm: true,
+      addEvent: true,
+      editEvent: false,
+      deleteEvent: false
     });
   };
 
@@ -159,20 +174,6 @@ class App extends React.Component {
     e.preventDefault();
 
     const temp = { ...this.state };
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
 
     const {
       eventName,
@@ -191,31 +192,64 @@ class App extends React.Component {
         errorMessage: "Attendees cannot be greater than capacity."
       });
     } else {
-      const actualDate = `${this.state.date.getDate()}th ${
-        months[this.state.date.getMonth()]
-      } ${this.state.date.getFullYear()}`;
+      if (this.state.addEvent) {
+        const body = {
+          id: this.state.totalEvents + 1,
+          name: eventName,
+          location: eventLocation,
+          allowedAttendees: eventCapacity,
+          totalAttendees: eventAttendees,
+          time: "7:00pm - 8:00pm",
+          repeats: 12,
+          date: this.state.date
+        };
 
-      const body = {
-        name: eventName,
-        location: eventLocation,
-        allowedAttendees: eventCapacity,
-        totalAttendees: eventAttendees,
-        time: "7:00pm - 8:00pm",
-        repeats: 12,
-        date: actualDate
-      };
+        // check selected date is greater than current date
+        if (this.state.date > new window.Date()) {
+          temp.eventsListData.upcoming = [
+            ...temp.eventsListData.upcoming,
+            body
+          ];
+        } else {
+          temp.eventsListData.current = [...temp.eventsListData.current, body];
+        }
 
-      // check selected date is greater than current date
-      if (this.state.date > new window.Date()) {
-        temp.eventsListData.upcoming = [...temp.eventsListData.upcoming, body];
-      } else {
-        temp.eventsListData.current = [...temp.eventsListData.current, body];
+        temp.all = true;
+        temp.upcoming = false;
+        temp.outdated = false;
+      } else if (this.state.editEvent) {
+        Object.keys(temp.eventsListData).forEach(listType => {
+          temp.eventsListData[listType].forEach((type, index) => {
+            if (type.id === this.state.currentEventID) {
+              type.name = eventName;
+              type.location = eventLocation;
+              type.allowedAttendees = eventCapacity;
+              type.totalAttendees = eventAttendees;
+              type.date = this.state.date;
+
+              // if edited date is greater than current date
+              if (this.state.date > new window.Date()) {
+                temp.eventsListData[listType].splice(index, 1);
+
+                temp.eventsListData.upcoming = [
+                  ...temp.eventsListData.upcoming,
+                  type
+                ];
+              } else {
+                temp.eventsListData[listType].splice(index, 1);
+
+                temp.eventsListData.current = [
+                  ...temp.eventsListData.current,
+                  type
+                ];
+              }
+            }
+          });
+        });
       }
+
       temp.modalFormError = false;
       temp.showModalForm = false;
-      temp.all = true;
-      temp.upcoming = false;
-      temp.outdated = false;
       temp.eventDetail = {
         eventName: "",
         eventLocation: "",
@@ -248,8 +282,58 @@ class App extends React.Component {
     });
   };
 
+  // helper function for editing event
+  _onEditEvent = eventID => {
+    const temp = { ...this.state };
+    let name, allowedAttendees, totalAttendees, location, date;
+
+    Object.keys(this.state.eventsListData).forEach(listType => {
+      this.state.eventsListData[listType].forEach(type => {
+        if (type.id === eventID) {
+          name = type.name;
+          allowedAttendees = type.allowedAttendees;
+          totalAttendees = type.totalAttendees;
+          location = type.location;
+          date = type.date;
+        }
+      });
+    });
+
+    temp.showModalForm = true;
+    temp.editEvent = true;
+    temp.addEvent = false;
+    temp.deleteEvent = false;
+    temp.eventDetail = {
+      eventName: name,
+      eventLocation: location,
+      eventCapacity: allowedAttendees,
+      eventAttendees: totalAttendees
+    };
+    temp.date = new window.Date(date);
+    temp.currentEventID = eventID;
+
+    this.setState({
+      ...temp
+    });
+  };
+
   // get events list based on filter
   _listContainerTable = () => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+
     return (
       <TableContainer>
         <TableHeader>
@@ -264,12 +348,18 @@ class App extends React.Component {
         </TableHeader>
         <ListEventsContainer>
           {this.state.listData.map((data, index) => {
+            const dateObj = new window.Date(data.date);
+
+            const actualDate = `${dateObj.getDate()}th ${
+              months[dateObj.getMonth()]
+            }, ${dateObj.getFullYear()}`;
+
             return (
               <ListEvent key={index}>
                 <EventId>{index + 1}</EventId>
                 <EventName>{data.name}</EventName>
                 <EventDate>
-                  <EventDateContainer>{data.date}</EventDateContainer>
+                  <EventDateContainer>{actualDate}</EventDateContainer>
                   <EventTimeContainer>{data.time}</EventTimeContainer>
                 </EventDate>
                 <RepeatsContainer>{data.repeats}</RepeatsContainer>
@@ -283,7 +373,10 @@ class App extends React.Component {
                 </AttendeesContainer>
                 <FeedBackEditContainer>
                   <Feedback title="Event Feedback">Feedback</Feedback>
-                  <EditIconContainer title="Edit Event">
+                  <EditIconContainer
+                    onClick={() => this._onEditEvent(data.id)}
+                    title="Edit Event"
+                  >
                     <MdEdit />
                   </EditIconContainer>
                   <DeleteIconContainer title="Delete Event">
