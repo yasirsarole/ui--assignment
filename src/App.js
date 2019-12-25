@@ -84,35 +84,51 @@ class App extends React.Component {
           </Wrapper>
         </Header>
         <Main>
-          <NewEventPanel className="NewEventPanel">
+          <NewEventPanel>
             <Wrapper>
-              <AddEvent className="AddEvent">
-                <NewEventTitle className="NewEventTitle">
-                  new event
-                </NewEventTitle>
+              <AddEvent>
+                <NewEventTitle>new event</NewEventTitle>
                 <FiPlus />
               </AddEvent>
-              <MainEventsMenu className="MainEventsMenu">
-                <EventsTitle className="EventsTitle">events</EventsTitle>
-                <EventsMenu className="EventsMenu">
+              <MainEventsMenu>
+                <EventsTitle>events</EventsTitle>
+                <EventsMenu>
                   <EventsMenuList>
-                    <EventsNumber className="EventsNumber">87</EventsNumber>
-                    <EventDesc className="EventDesc">events</EventDesc>
+                    <EventsNumber>87</EventsNumber>
+                    <EventDesc>events</EventDesc>
                   </EventsMenuList>
                   <EventsMenuList>
-                    <EventsNumber className="EventsNumber">40</EventsNumber>
-                    <EventDesc className="EventDesc">Upcoming events</EventDesc>
+                    <EventsNumber>40</EventsNumber>
+                    <EventDesc>Upcoming events</EventDesc>
                   </EventsMenuList>
                   <EventsMenuList>
-                    <EventsNumber className="EventsNumber">6</EventsNumber>
-                    <EventDesc className="EventDesc">
-                      Cancelled events
-                    </EventDesc>
+                    <EventsNumber>6</EventsNumber>
+                    <EventDesc>Cancelled events</EventDesc>
                   </EventsMenuList>
                 </EventsMenu>
               </MainEventsMenu>
             </Wrapper>
           </NewEventPanel>
+          <EventsListContainer>
+            <ListContainerHeader>
+              <SearchIconContainer>
+                <FiSearch />
+              </SearchIconContainer>
+              <ProfileInfo>
+                <UserName>
+                  hi, Janelle Ried <MdKeyboardArrowDown />
+                </UserName>
+                <IconsContainer>
+                  <BellIconContainer>
+                    <FaBell />
+                  </BellIconContainer>
+                  <PlusIconContainer>
+                    <FiPlus />
+                  </PlusIconContainer>
+                </IconsContainer>
+              </ProfileInfo>
+            </ListContainerHeader>
+          </EventsListContainer>
         </Main>
       </>
     );
@@ -152,5 +168,21 @@ const EventsMenuList = styled.li``;
 const EventsNumber = styled.span``;
 
 const EventDesc = styled.span``;
+
+const EventsListContainer = styled.div``;
+
+const ListContainerHeader = styled.div``;
+
+const SearchIconContainer = styled.div``;
+
+const ProfileInfo = styled.div``;
+
+const UserName = styled.span``;
+
+const IconsContainer = styled.div``;
+
+const BellIconContainer = styled.div``;
+
+const PlusIconContainer = styled.div``;
 
 export default App;
