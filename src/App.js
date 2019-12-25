@@ -719,8 +719,7 @@ const TableHeader = styled.div`
   font-weight: bold;
 
   @media (max-width: 768px) {
-    display: block;
-    padding: 10px;
+    display: none;
   }
 
   span {
@@ -940,7 +939,7 @@ const Hamburger = styled.div`
 
   @media (max-width: 1024px) {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
   }
 `;
