@@ -25,12 +25,19 @@ class App extends React.Component {
     totalEvents: 0,
     upcomingEvents: 0,
     outDatedEvents: 0,
-    hamburgerActive: true
+    hamburgerActive: true,
+    listData: [],
+    all: false,
+    upcoming: false,
+    outdated: false
   };
 
   componentDidMount() {
     // get events data count
     this._geteventsDataCount();
+
+    //get list data
+    this._filterEvents("all");
 
     // hamburgerActive when window width is greater than 1024
     this._updateHamburgerState();
@@ -91,10 +98,39 @@ class App extends React.Component {
     });
   };
 
-  // get events list based on filter
-  _listContainerTable = () => {
+  // filter upcoming and outdated events
+  _filterEvents = eventType => {
     const currentData = this._getEventsData();
 
+    this.setState({
+      all: false,
+      upcoming: false,
+      outdated: false
+    });
+
+    let listData = [];
+
+    if (currentData) {
+      if (eventType === "all") {
+        listData = [
+          ...listData,
+          ...currentData.current,
+          ...currentData.upcoming,
+          ...currentData.outdated
+        ];
+      } else {
+        listData = [...listData, ...currentData[eventType]];
+      }
+    }
+
+    this.setState({
+      listData,
+      [eventType]: true
+    });
+  };
+
+  // get events list based on filter
+  _listContainerTable = () => {
     return (
       <TableContainer>
         <TableHeader>
@@ -108,7 +144,7 @@ class App extends React.Component {
           <Attendees>attendees</Attendees>
         </TableHeader>
         <ListEventsContainer>
-          {currentData.current.map((data, index) => {
+          {this.state.listData.map((data, index) => {
             return (
               <ListEvent key={index}>
                 <EventId>{index + 1}</EventId>
@@ -213,15 +249,33 @@ class App extends React.Component {
               <MainEventsMenu>
                 <EventsTitle>events</EventsTitle>
                 <EventsMenu>
-                  <EventsMenuList title="Total Events" className="active">
+                  <EventsMenuList
+                    onClick={() => {
+                      this._filterEvents("all");
+                    }}
+                    title="Total Events"
+                    className={this.state.all && "active"}
+                  >
                     <EventsNumber>{this.state.totalEvents}</EventsNumber>
                     <EventDesc>Events</EventDesc>
                   </EventsMenuList>
-                  <EventsMenuList title="Upcoming Events">
+                  <EventsMenuList
+                    onClick={() => {
+                      this._filterEvents("upcoming");
+                    }}
+                    title="Upcoming Events"
+                    className={this.state.upcoming && "active"}
+                  >
                     <EventsNumber>{this.state.upcomingEvents}</EventsNumber>
                     <EventDesc>Upcoming events</EventDesc>
                   </EventsMenuList>
-                  <EventsMenuList title="Outdated Events">
+                  <EventsMenuList
+                    onClick={() => {
+                      this._filterEvents("outdated");
+                    }}
+                    title="Outdated Events"
+                    className={this.state.outdated && "active"}
+                  >
                     <EventsNumber>{this.state.outDatedEvents}</EventsNumber>
                     <EventDesc>Outdated events</EventDesc>
                   </EventsMenuList>
