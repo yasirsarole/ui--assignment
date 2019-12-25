@@ -206,27 +206,28 @@ class App extends React.Component {
                 </ProfileInfo>
               </ListContainerHeader>
               <ListContainerSubHeader>
-                <SearchFormContainer>
+                <SearchFormContainer title="Search Events">
                   <FiSearch />
                   <SearchForm>
-                    <SearchEvents type="text" />
+                    <SearchEvents placeholder="Search events" type="text" />
                   </SearchForm>
                 </SearchFormContainer>
                 <ListSideMenuContainer>
                   <ShowAll>
                     <Show>
                       show:
-                      <All>all</All>
+                      <All> all</All>
                     </Show>
+                    <MdKeyboardArrowDown />
                   </ShowAll>
                   <SubHeaderIconsContainer>
-                    <SubHeaderIconsContainerSingle>
+                    <SubHeaderIconsContainerSingle title="Calendar">
                       <FaRegCalendar />
                     </SubHeaderIconsContainerSingle>
-                    <SubHeaderIconsContainerSingle>
+                    <SubHeaderIconsContainerSingle title="List View">
                       <MdFormatListBulleted />
                     </SubHeaderIconsContainerSingle>
-                    <SubHeaderIconsContainerSingle>
+                    <SubHeaderIconsContainerSingle title="Grid View">
                       <FiGrid />
                     </SubHeaderIconsContainerSingle>
                   </SubHeaderIconsContainer>
@@ -401,7 +402,7 @@ const EventsListContainer = styled.div`
 `;
 
 const ListContainerHeader = styled.div`
-  padding: 23px 0 16px 3.3%;
+  padding: 20px 0 16px 3.3%;
   border-bottom: 1px solid lightgray;
   display: flex;
   align-items: center;
@@ -473,25 +474,83 @@ const PlusIconContainer = styled.div`
   font-size: 12px;
 `;
 
-const ListContainerSubHeader = styled.div``;
+const ListContainerSubHeader = styled.div`
+  padding: 24px 0 0 3.3%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-const SearchFormContainer = styled.div``;
+const SearchFormContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    color: rgb(119, 130, 158);
+  }
+`;
 
 const SearchForm = styled.form``;
 
-const SearchEvents = styled.input``;
+const SearchEvents = styled.input`
+  font-weight: bold;
+  font-size: 11px;
+  display: block;
+  color: rgb(184, 192, 212);
+  outline: none;
+  border: none;
+  padding: 5px;
 
-const ListSideMenuContainer = styled.div``;
+  &::placeholder {
+    font-weight: bold;
+    font-size: 11px;
+    display: block;
+    color: rgb(184, 192, 212);
+  }
+`;
 
-const ShowAll = styled.div``;
+const ListSideMenuContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+const ShowAll = styled.div`
+  margin-right: 9px;
+  text-transform: capitalize;
+  font-size: 11px;
+  font-weight: bold;
+  color: rgb(171, 180, 199);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    font-size: 15px;
+  }
+`;
 
 const Show = styled.span``;
 
-const All = styled.span``;
+const All = styled.span`
+  color: rgb(114, 115, 143);
+`;
 
-const SubHeaderIconsContainer = styled.div``;
+const SubHeaderIconsContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
+  color: rgb(134, 149, 178);
+`;
 
-const SubHeaderIconsContainerSingle = styled.div``;
+const SubHeaderIconsContainerSingle = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
 
 const TableContainer = styled.div``;
 
