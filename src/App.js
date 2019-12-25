@@ -164,7 +164,7 @@ class App extends React.Component {
           </Header>
           <Main>
             <NewEventPanel>
-              <AddEvent>
+              <AddEvent title="Add New Event">
                 <NewEventTitle>new event</NewEventTitle>
                 <FiPlus />
               </AddEvent>
@@ -188,18 +188,18 @@ class App extends React.Component {
             </NewEventPanel>
             <EventsListContainer>
               <ListContainerHeader>
-                <SearchIconContainer>
+                <SearchIconContainer title="Search Event">
                   <FiSearch />
                 </SearchIconContainer>
                 <ProfileInfo>
-                  <UserName>
-                    hi, Janelle Ried <MdKeyboardArrowDown />
+                  <UserName title="Profile">
+                    hi, janelle ried <MdKeyboardArrowDown />
                   </UserName>
                   <IconsContainer>
-                    <BellIconContainer>
+                    <BellIconContainer title="Turn Notifications Off">
                       <FaBell />
                     </BellIconContainer>
-                    <PlusIconContainer>
+                    <PlusIconContainer title="Add New Event">
                       <FiPlus />
                     </PlusIconContainer>
                   </IconsContainer>
@@ -277,7 +277,7 @@ const CommunityHeading = styled.span`
   margin-bottom: 55px;
 
   span {
-    color: rgb(50, 65, 101);
+    color: rgb(117, 102, 243);
     margin-bottom: 0;
   }
 `;
@@ -305,7 +305,7 @@ const NavListItem = styled.li`
   &.active {
     a,
     svg {
-      color: rgb(50, 65, 101);
+      color: rgb(117, 102, 243);
       font-weight: bold;
     }
 
@@ -313,7 +313,7 @@ const NavListItem = styled.li`
       content: "";
       width: 3px;
       height: 3px;
-      background-color: rgb(50, 65, 101);
+      background-color: rgb(117, 102, 243);
       border-radius: 50%;
       position: absolute;
       z-index: 5;
@@ -350,7 +350,8 @@ const AddEvent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgb(50, 65, 101);
+  color: rgb(140, 153, 184);
+  cursor: pointer;
 `;
 
 const NewEventTitle = styled.span`
@@ -374,7 +375,7 @@ const EventsMenu = styled.ul``;
 
 const EventsMenuList = styled.li`
   padding: 23px 0 23px 10%;
-  margin-left: 12px;
+  margin: 0 2px 0 12px;
   cursor: pointer;
 
   &.active {
@@ -390,9 +391,9 @@ const EventsNumber = styled.span`
 
 const EventDesc = styled.span`
   font-weight: bold;
-  font-size: 12px;
+  font-size: 11px;
   display: block;
-  color: rgb(119, 130, 158);
+  color: rgb(182, 191, 210);
 `;
 
 const EventsListContainer = styled.div`
@@ -400,22 +401,77 @@ const EventsListContainer = styled.div`
 `;
 
 const ListContainerHeader = styled.div`
-display: flex;
-    align-items: center;
-    justify-content: space-between;
+  padding: 23px 0 16px 3.3%;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const SearchIconContainer = styled.div``;
+const SearchIconContainer = styled.div`
+  cursor: pointer;
 
-const ProfileInfo = styled.div``;
+  svg {
+    color: rgb(119, 130, 158);
+  }
+`;
 
-const UserName = styled.span``;
+const ProfileInfo = styled.div`
+  display: inline-flex;
+`;
 
-const IconsContainer = styled.div``;
+const UserName = styled.span`
+  margin-right: 16px;
+  color: rgb(130, 133, 154);
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 
-const BellIconContainer = styled.div``;
+  &:before {
+    content: "";
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgb(243, 244, 248);
+    position: absolute;
+    z-index: 5;
+    left: -30px;
+  }
 
-const PlusIconContainer = styled.div``;
+  svg {
+    font-size: 15px;
+  }
+`;
+
+const IconsContainer = styled.div`
+  display: inline-flex;
+`;
+
+const BellIconContainer = styled.div`
+  color: rgb(117, 102, 243);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 21px;
+`;
+
+const PlusIconContainer = styled.div`
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+  background: rgb(117, 102, 243);
+  border-radius: 50%;
+  font-size: 12px;
+`;
 
 const ListContainerSubHeader = styled.div``;
 
