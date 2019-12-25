@@ -19,8 +19,17 @@ import { GoSignIn } from "react-icons/go";
 import { FiPlus, FiSearch, FiGrid } from "react-icons/fi";
 
 class App extends React.Component {
-  componentDidMount() {
-    console.log("componentDidMount", this._getEventsData());
+  state = {
+    totalEvents: 0,
+    upcomingEvents: 0,
+    outDatedEvents: 0
+  };
+
+  async componentDidMount() {
+    // get events data count
+    await this._geteventsDataCount();
+
+    console.log("this-state", this.state);
   }
 
   // get events Data
@@ -35,6 +44,26 @@ class App extends React.Component {
     }
 
     return data;
+  };
+
+  // get count for total, upcoming and outdated events
+  _geteventsDataCount = () => {
+    const currentData = this._getEventsData();
+    const currentEventCount = Array.isArray(currentData.current)
+      ? currentData.current.length
+      : 0;
+    const UpcomingCount = Array.isArray(currentData.upcoming)
+      ? currentData.upcoming.length
+      : 0;
+    const OutdatedCount = Array.isArray(currentData.outdated)
+      ? currentData.outdated.length
+      : 0;
+
+    this.setState({
+      totalEvents: currentEventCount + UpcomingCount + OutdatedCount,
+      upcomingEvents: UpcomingCount,
+      outDatedEvents: OutdatedCount
+    });
   };
 
   render() {
@@ -94,16 +123,16 @@ class App extends React.Component {
                 <EventsTitle>events</EventsTitle>
                 <EventsMenu>
                   <EventsMenuList>
-                    <EventsNumber>87</EventsNumber>
+                    <EventsNumber>{this.state.totalEvents}</EventsNumber>
                     <EventDesc>events</EventDesc>
                   </EventsMenuList>
                   <EventsMenuList>
-                    <EventsNumber>40</EventsNumber>
+                    <EventsNumber>{this.state.upcomingEvents}</EventsNumber>
                     <EventDesc>Upcoming events</EventDesc>
                   </EventsMenuList>
                   <EventsMenuList>
-                    <EventsNumber>6</EventsNumber>
-                    <EventDesc>Cancelled events</EventDesc>
+                    <EventsNumber>{this.state.outDatedEvents}</EventsNumber>
+                    <EventDesc>Outdated events</EventDesc>
                   </EventsMenuList>
                 </EventsMenu>
               </MainEventsMenu>
