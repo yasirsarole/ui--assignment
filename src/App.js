@@ -83,7 +83,37 @@ class App extends React.Component {
             </Navigation>
           </Wrapper>
         </Header>
-        <Main>this is main</Main>
+        <Main>
+          <NewEventPanel className="NewEventPanel">
+            <Wrapper>
+              <AddEvent className="AddEvent">
+                <NewEventTitle className="NewEventTitle">
+                  new event
+                </NewEventTitle>
+                <FiPlus />
+              </AddEvent>
+              <MainEventsMenu className="MainEventsMenu">
+                <EventsTitle className="EventsTitle">events</EventsTitle>
+                <EventsMenu className="EventsMenu">
+                  <EventsMenuList>
+                    <EventsNumber className="EventsNumber">87</EventsNumber>
+                    <EventDesc className="EventDesc">events</EventDesc>
+                  </EventsMenuList>
+                  <EventsMenuList>
+                    <EventsNumber className="EventsNumber">40</EventsNumber>
+                    <EventDesc className="EventDesc">Upcoming events</EventDesc>
+                  </EventsMenuList>
+                  <EventsMenuList>
+                    <EventsNumber className="EventsNumber">6</EventsNumber>
+                    <EventDesc className="EventDesc">
+                      Cancelled events
+                    </EventDesc>
+                  </EventsMenuList>
+                </EventsMenu>
+              </MainEventsMenu>
+            </Wrapper>
+          </NewEventPanel>
+        </Main>
       </>
     );
   }
@@ -104,5 +134,23 @@ const NavListContainer = styled.ul``;
 const NavListItem = styled.li``;
 
 const NavItem = styled.a``;
+
+const NewEventPanel = styled.div``;
+
+const AddEvent = styled.div``;
+
+const NewEventTitle = styled.span``;
+
+const MainEventsMenu = styled.div``;
+
+const EventsTitle = styled.span``;
+
+const EventsMenu = styled.ul``;
+
+const EventsMenuList = styled.li``;
+
+const EventsNumber = styled.span``;
+
+const EventDesc = styled.span``;
 
 export default App;
