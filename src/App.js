@@ -161,7 +161,7 @@ class App extends React.Component {
               )}
             </Hamburger>
             {this.state.hamburgerActive && (
-              <>
+              <CommunityHeaderContainer>
                 <CommunityHeading>
                   community<CommunityHeading>manager</CommunityHeading>
                 </CommunityHeading>
@@ -201,7 +201,7 @@ class App extends React.Component {
                     </NavListItem>
                   </NavListContainer>
                 </Navigation>
-              </>
+              </CommunityHeaderContainer>
             )}
           </Header>
           <Main>
@@ -319,12 +319,28 @@ const Header = styled.header`
 
   @media (max-width: 1024px) {
     text-align: center;
+    position: relative;
   }
 `;
 
 const Main = styled.main`
   flex-basis: 86.5%;
   display: inline-flex;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
+`;
+
+const CommunityHeaderContainer = styled.div`
+  @media (max-width: 1024px) {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 5;
+    padding-bottom: 15px;
+  }
 `;
 
 const CommunityHeading = styled.span`
@@ -427,6 +443,14 @@ const AddEvent = styled.div`
   justify-content: space-between;
   color: rgb(140, 153, 184);
   cursor: pointer;
+
+  @media (max-width: 1024px) {
+    padding: 0px 20px 19px;
+    justify-content: flex-start;
+    display: inline-flex;
+    border: none;
+    margin-bottom: 0;
+  }
 `;
 
 const NewEventTitle = styled.span`
@@ -434,6 +458,10 @@ const NewEventTitle = styled.span`
   font-weight: bold;
   font-size: 10px;
   display: inline-block;
+
+  @media (max-width: 1024px) {
+    margin-right: 15px;
+  }
 `;
 
 const MainEventsMenu = styled.div``;
@@ -444,6 +472,10 @@ const EventsTitle = styled.span`
   padding: 0 15%;
   text-transform: capitalize;
   font-size: 25px;
+
+  @media (max-width: 1024px) {
+    padding: 0 20px;
+  }
 `;
 
 const EventsMenu = styled.ul``;
@@ -455,6 +487,11 @@ const EventsMenuList = styled.li`
 
   &.active {
     background: #fff;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 23px 20px;
+    margin: 0 20px;
   }
 `;
 
@@ -685,6 +722,11 @@ const ListEventsContainer = styled.ul`
   height: calc(100vh - 153px);
   position: relative;
   box-shadow: 0px 0px 59px -42px rgba(0, 0, 0, 0.65);
+
+  @media (max-width: 1024px) {
+    height: auto;
+    width: auto;
+  }
 `;
 
 const ListEvent = styled.li`
