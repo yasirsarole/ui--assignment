@@ -16,7 +16,8 @@ import { FaStar, FaUsers, FaBell, FaRegCalendar } from "react-icons/fa";
 import { TiNews } from "react-icons/ti";
 import { GiScrewdriver } from "react-icons/gi";
 import { GoSignIn } from "react-icons/go";
-import { FiPlus, FiSearch, FiGrid } from "react-icons/fi";
+import { IoMdMan } from "react-icons/io";
+import { FiPlus, FiSearch, FiGrid, FiMinus } from "react-icons/fi";
 
 class App extends React.Component {
   state = {
@@ -25,11 +26,9 @@ class App extends React.Component {
     outDatedEvents: 0
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     // get events data count
-    await this._geteventsDataCount();
-
-    console.log("this-state", this.state);
+    this._geteventsDataCount();
   }
 
   // get events Data
@@ -66,11 +65,63 @@ class App extends React.Component {
     });
   };
 
+  // get events list based on filter
+  _listContainerTable = () => {
+    const currentData = this._getEventsData();
+
+    return (
+      <div className="TableContainer">
+        <div className="TableHeader">
+          <span className="ID">id</span>
+          <span className="Event">
+            event <MdKeyboardArrowDown />
+          </span>
+          <span className="Date">date</span>
+          <span className="Repeats">repeats</span>
+          <span className="Location">location</span>
+          <span className="Attendees">attendees</span>
+        </div>
+        <ul className="ListEventsContainer">
+          {currentData.current.map((data, index) => {
+            return (
+              <li key={index} className="ListEvent">
+                <span className="EventId">{index}</span>
+                <span className="EventName">{data.name}</span>
+                <span className="EventDate">
+                  <span className="EventDateContainer">{data.date}</span>
+                  <span className="EventTimeContainer">{data.time}</span>
+                </span>
+                <span className="RepeatsContainer">{data.repeats}</span>
+                <span className="LocationContainer">{data.location}</span>
+                <span className="AttendeesContainer">
+                  <IoMdMan />
+                  {`${data.allowedAttendees}/${data.totalAttendees}`}
+                  {data.allowedAttendees === data.totalAttendees && (
+                    <span className="AttendeesFull">full</span>
+                  )}
+                </span>
+                <span className="FeedBackEditContainer">
+                  <span className="Feedback">feedback</span>
+                  <div className="EditIconContainer">
+                    <MdEdit />
+                  </div>
+                  <div className="DeleteIconContainer">
+                    <FiMinus />
+                  </div>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  };
+
   render() {
     return (
-      <>
-        <Header>
-          <Wrapper>
+      <MainContainer>
+        <Wrapper>
+          <Header>
             <CommunityHeading className="community">
               community<CommunityHeading>manager</CommunityHeading>
             </CommunityHeading>
@@ -110,11 +161,9 @@ class App extends React.Component {
                 </NavListItem>
               </NavListContainer>
             </Navigation>
-          </Wrapper>
-        </Header>
-        <Main>
-          <NewEventPanel>
-            <Wrapper>
+          </Header>
+          <Main>
+            <NewEventPanel>
               <AddEvent>
                 <NewEventTitle>new event</NewEventTitle>
                 <FiPlus />
@@ -136,33 +185,65 @@ class App extends React.Component {
                   </EventsMenuList>
                 </EventsMenu>
               </MainEventsMenu>
-            </Wrapper>
-          </NewEventPanel>
-          <EventsListContainer>
-            <ListContainerHeader>
-              <SearchIconContainer>
-                <FiSearch />
-              </SearchIconContainer>
-              <ProfileInfo>
-                <UserName>
-                  hi, Janelle Ried <MdKeyboardArrowDown />
-                </UserName>
-                <IconsContainer>
-                  <BellIconContainer>
-                    <FaBell />
-                  </BellIconContainer>
-                  <PlusIconContainer>
-                    <FiPlus />
-                  </PlusIconContainer>
-                </IconsContainer>
-              </ProfileInfo>
-            </ListContainerHeader>
-          </EventsListContainer>
-        </Main>
-      </>
+            </NewEventPanel>
+            <EventsListContainer>
+              <ListContainerHeader>
+                <SearchIconContainer>
+                  <FiSearch />
+                </SearchIconContainer>
+                <ProfileInfo>
+                  <UserName>
+                    hi, Janelle Ried <MdKeyboardArrowDown />
+                  </UserName>
+                  <IconsContainer>
+                    <BellIconContainer>
+                      <FaBell />
+                    </BellIconContainer>
+                    <PlusIconContainer>
+                      <FiPlus />
+                    </PlusIconContainer>
+                  </IconsContainer>
+                </ProfileInfo>
+              </ListContainerHeader>
+              <ListContainerSubHeader>
+                <SearchFormContainer>
+                  <FiSearch />
+                  <SearchForm>
+                    <SearchEvents type="text" />
+                  </SearchForm>
+                </SearchFormContainer>
+                <ListSideMenuContainer>
+                  <ShowAll>
+                    <Show>
+                      show:
+                      <All>all</All>
+                    </Show>
+                  </ShowAll>
+                  <SubHeaderIconsContainer>
+                    <SubHeaderIconsContainerSingle>
+                      <FaRegCalendar />
+                    </SubHeaderIconsContainerSingle>
+                    <SubHeaderIconsContainerSingle>
+                      <MdFormatListBulleted />
+                    </SubHeaderIconsContainerSingle>
+                    <SubHeaderIconsContainerSingle>
+                      <FiGrid />
+                    </SubHeaderIconsContainerSingle>
+                  </SubHeaderIconsContainer>
+                </ListSideMenuContainer>
+              </ListContainerSubHeader>
+              <div className="ListContainerTable">
+                {this._listContainerTable()}
+              </div>
+            </EventsListContainer>
+          </Main>
+        </Wrapper>
+      </MainContainer>
     );
   }
 }
+
+const MainContainer = styled.div``;
 
 const Wrapper = styled.div``;
 
@@ -213,5 +294,71 @@ const IconsContainer = styled.div``;
 const BellIconContainer = styled.div``;
 
 const PlusIconContainer = styled.div``;
+
+const ListContainerSubHeader = styled.div``;
+
+const SearchFormContainer = styled.div``;
+
+const SearchForm = styled.form``;
+
+const SearchEvents = styled.input``;
+
+const ListSideMenuContainer = styled.div``;
+
+const ShowAll = styled.div``;
+
+const Show = styled.span``;
+
+const All = styled.span``;
+
+const SubHeaderIconsContainer = styled.div``;
+
+const SubHeaderIconsContainerSingle = styled.div``;
+
+const TableContainer = styled.div``;
+
+const TableHeader = styled.div``;
+
+const ID = styled.span``;
+
+const Event = styled.span``;
+
+const Date = styled.span``;
+
+const Repeats = styled.span``;
+
+const Location = styled.span``;
+
+const Attendees = styled.span``;
+
+const ListEventsContainer = styled.ul``;
+
+const ListEvent = styled.li``;
+
+const EventId = styled.span``;
+
+const EventName = styled.span``;
+
+const EventDate = styled.span``;
+
+const EventDateContainer = styled.span``;
+
+const EventTimeContainer = styled.span``;
+
+const RepeatsContainer = styled.span``;
+
+const LocationContainer = styled.span``;
+
+const AttendeesContainer = styled.span``;
+
+const AttendeesFull = styled.span``;
+
+const FeedBackEditContainer = styled.span``;
+
+const Feedback = styled.span``;
+
+const EditIconContainer = styled.div``;
+
+const DeleteIconContainer = styled.div``;
 
 export default App;

@@ -24,8 +24,8 @@ const eventsData = {
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
-      allowedAttendees: 6,
-      totalAttendees: 5
+      allowedAttendees: 12,
+      totalAttendees: 12
     },
     {
       name: "Bowls",
@@ -60,8 +60,8 @@ const eventsData = {
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
-      allowedAttendees: 6,
-      totalAttendees: 5
+      allowedAttendees: 18,
+      totalAttendees: 18
     },
     {
       name: "Bowls",
