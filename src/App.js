@@ -31,7 +31,7 @@ class App extends React.Component {
     all: false,
     upcoming: false,
     outdated: false,
-    showModalForm: true,
+    showModalForm: false,
     date: new window.Date()
   };
 
@@ -199,8 +199,19 @@ class App extends React.Component {
     return (
       <MainContainer>
         {this.state.showModalForm && (
-          <ModalContainer>
-            <AddEventForm onSubmit={e => e.preventDefault()}>
+          <ModalContainer
+            onClick={() => {
+              this.setState({
+                showModalForm: false
+              });
+            }}
+          >
+            <AddEventForm
+              onClick={e => {
+                e.stopPropagation();
+              }}
+              onSubmit={e => e.preventDefault()}
+            >
               <EventNameContainer>
                 <NameLabel htmlFor="name">event name</NameLabel>
                 <NameInput id="name" type="text" />
@@ -228,6 +239,15 @@ class App extends React.Component {
                 <EventAttendeesInput id="attendees" type="number" />
               </EventAttendees>
               <SubmitButton type="submit" value="Submit" />
+              <CloseIconContainerModal
+                onClick={() => {
+                  this.setState({
+                    showModalForm: false
+                  });
+                }}
+              >
+                <MdClose />
+              </CloseIconContainerModal>
             </AddEventForm>
           </ModalContainer>
         )}
@@ -1092,6 +1112,21 @@ const EventNameContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const CloseIconContainerModal = styled.div`
+  cursor: pointer;
+
+  svg {
+    position: absolute;
+    right: -9px;
+    top: -9px;
+    font-size: 20px;
+    background: rgb(117, 102, 243);
+    padding: 3px;
+    border-radius: 50%;
+    color: #fff;
+  }
 `;
 
 const NameLabel = styled.label``;
