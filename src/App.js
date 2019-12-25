@@ -32,10 +32,23 @@ class App extends React.Component {
     upcoming: false,
     outdated: false,
     showModalForm: false,
-    date: new window.Date()
+    date: new window.Date(),
+    modalFormError: false,
+    errorMessage: "All the fields are compulsory.",
+    eventDetail: {
+      eventName: "",
+      eventLocation: "",
+      eventCapacity: "",
+      eventAttendees: 0
+    },
+    eventsListData: JSON.parse(localStorage.getItem("data"))
   };
 
   componentDidMount() {
+    // check if browser supports local storage
+    if (typeof Storage !== "undefined")
+      localStorage.setItem("data", JSON.stringify(eventsData));
+
     // get events data count
     this._geteventsDataCount();
 
@@ -62,14 +75,11 @@ class App extends React.Component {
 
   // get events Data
   _getEventsData = () => {
-    let data = eventsData;
+    let data = this.state.eventsListData;
 
     // check if browser supports local storage
-    if (typeof Storage !== "undefined") {
-      localStorage.setItem("data", JSON.stringify(eventsData));
-
-      data = JSON.parse(localStorage.getItem("data"));
-    }
+    if (typeof Storage !== "undefined")
+      localStorage.setItem("data", JSON.stringify(data));
 
     return data;
   };
@@ -140,10 +150,103 @@ class App extends React.Component {
   };
 
   // on date change
-  // _onDateChange = date => {
-  //   console.log("heeeeeeeeeeeeeeeeelo");
-  //   date => this.setState({ date });
-  // };
+  _onDateChange = date => {
+    this.setState({ date });
+  };
+
+  // Add/Edit event on modal form submit
+  _onModalFormSubmit = e => {
+    e.preventDefault();
+
+    const temp = { ...this.state };
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+
+    const {
+      eventName,
+      eventLocation,
+      eventCapacity,
+      eventAttendees
+    } = this.state.eventDetail;
+
+    if (!(!!eventName.length && !!eventLocation.length && !!eventCapacity)) {
+      this.setState({
+        modalFormError: true
+      });
+    } else if (eventCapacity < eventAttendees) {
+      this.setState({
+        modalFormError: true,
+        errorMessage: "Attendees cannot be greater than capacity."
+      });
+    } else {
+      const actualDate = `${this.state.date.getDate()}th ${
+        months[this.state.date.getMonth()]
+      } ${this.state.date.getFullYear()}`;
+
+      const body = {
+        name: eventName,
+        location: eventLocation,
+        allowedAttendees: eventCapacity,
+        totalAttendees: eventAttendees,
+        time: "7:00pm - 8:00pm",
+        repeats: 12,
+        date: actualDate
+      };
+
+      // check selected date is greater than current date
+      if (this.state.date > new window.Date()) {
+        temp.eventsListData.upcoming = [...temp.eventsListData.upcoming, body];
+      } else {
+        temp.eventsListData.current = [...temp.eventsListData.current, body];
+      }
+      temp.modalFormError = false;
+      temp.showModalForm = false;
+      temp.all = true;
+      temp.upcoming = false;
+      temp.outdated = false;
+      temp.eventDetail = {
+        eventName: "",
+        eventLocation: "",
+        eventCapacity: "",
+        eventAttendees: 0
+      };
+
+      this.setState(
+        {
+          ...temp
+        },
+        () => {
+          // call this function to update event counts
+          this._geteventsDataCount();
+
+          // filter list data when event is added
+          this._filterEvents("all");
+        }
+      );
+    }
+  };
+
+  // handle values when input is changed
+  _handleInputChange = (inputType, value) => {
+    this.setState({
+      eventDetail: {
+        ...this.state.eventDetail,
+        [inputType]: value
+      }
+    });
+  };
 
   // get events list based on filter
   _listContainerTable = () => {
@@ -210,33 +313,77 @@ class App extends React.Component {
               onClick={e => {
                 e.stopPropagation();
               }}
-              onSubmit={e => e.preventDefault()}
+              onSubmit={e => this._onModalFormSubmit(e)}
             >
               <EventNameContainer>
                 <NameLabel htmlFor="name">event name</NameLabel>
-                <NameInput id="name" type="text" />
+                <NameInput
+                  onChange={e =>
+                    this._handleInputChange("eventName", e.target.value)
+                  }
+                  id="name"
+                  type="text"
+                  value={this.state.eventDetail.eventName}
+                />
               </EventNameContainer>
               <EventDateModal>
                 <DatePicker
-                  // onChange={date => this._onDateChange(date)}
+                  onChange={date => this._onDateChange(date)}
                   value={this.state.date}
+                  required
+                  minDate={new window.Date()}
                 />
               </EventDateModal>
               <EventLocation>
                 <LocationLabel htmlFor="location">location</LocationLabel>
-                <LocationInput id="location" type="text" />
+                <LocationInput
+                  onChange={e =>
+                    this._handleInputChange("eventLocation", e.target.value)
+                  }
+                  id="location"
+                  type="text"
+                  value={this.state.eventDetail.eventLocation}
+                />
               </EventLocation>
               <EventCapacity>
                 <EventCapacityLabel htmlFor="capacity">
                   capacity
                 </EventCapacityLabel>
-                <EventCapacityInput id="capacity" type="number" />
+                <EventCapacityInput
+                  onChange={e =>
+                    this._handleInputChange(
+                      "eventCapacity",
+                      parseInt(e.target.value)
+                    )
+                  }
+                  id="capacity"
+                  type="number"
+                  value={
+                    !!this.state.eventDetail.eventCapacity
+                      ? this.state.eventDetail.eventCapacity
+                      : 0
+                  }
+                />
               </EventCapacity>
               <EventAttendees>
                 <EventAttendeesLabel htmlFor="attendees">
                   attendees
                 </EventAttendeesLabel>
-                <EventAttendeesInput id="attendees" type="number" />
+                <EventAttendeesInput
+                  onChange={e =>
+                    this._handleInputChange(
+                      "eventAttendees",
+                      parseInt(e.target.value)
+                    )
+                  }
+                  id="attendees"
+                  type="number"
+                  value={
+                    !!this.state.eventDetail.eventAttendees
+                      ? this.state.eventDetail.eventAttendees
+                      : 0
+                  }
+                />
               </EventAttendees>
               <SubmitButton type="submit" value="Submit" />
               <CloseIconContainerModal
@@ -248,6 +395,9 @@ class App extends React.Component {
               >
                 <MdClose />
               </CloseIconContainerModal>
+              {this.state.modalFormError && (
+                <ErrorContainer>{this.state.errorMessage}</ErrorContainer>
+              )}
             </AddEventForm>
           </ModalContainer>
         )}
@@ -1102,6 +1252,10 @@ const AddEventForm = styled.form`
     font-size: 12px;
   }
 
+  input {
+    text-transform: initial;
+  }
+
   label {
     margin-right: 11px;
   }
@@ -1145,6 +1299,10 @@ const EventDateModal = styled.div`
     width: 300px !important;
     left: -22px !important;
   }
+
+  svg {
+    color: rgb(117, 102, 243);
+  }
 `;
 
 const EventLocation = styled.div`
@@ -1186,6 +1344,14 @@ const SubmitButton = styled.input`
   padding: 8px;
   border-radius: 3px;
   cursor: pointer;
+  outline: none;
+`;
+
+const ErrorContainer = styled.span`
+  color: #ff0000;
+  font-size: 10px;
+  margin-top: 5px;
+  display: block;
 `;
 
 export default App;
