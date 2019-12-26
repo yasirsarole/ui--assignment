@@ -21,6 +21,9 @@ import { GoSignIn } from "react-icons/go";
 import { IoMdMan } from "react-icons/io";
 import { FiPlus, FiSearch, FiGrid, FiMinus } from "react-icons/fi";
 
+// import components
+import Modal from "./Modal";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -424,122 +427,31 @@ class App extends React.Component {
     );
   };
 
+  // helper function to reset event values when modal is closed
+  _onModalContainerClick = () => {
+    this.setState({
+      showModalForm: false,
+      eventDetail: {
+        eventName: "",
+        eventLocation: "",
+        eventCapacity: "",
+        eventAttendees: 0
+      }
+    });
+  }
+
   render() {
+    const $this = this;
+    const componentProps = {
+      ...$this,
+      ...$this.state,
+      ...$this.props
+    }
+
     return (
       <MainContainer>
         {this.state.showModalForm && (
-          <ModalContainer
-            onClick={() => {
-              this.setState({
-                showModalForm: false,
-                eventDetail: {
-                  eventName: "",
-                  eventLocation: "",
-                  eventCapacity: "",
-                  eventAttendees: 0
-                }
-              });
-            }}
-          >
-            <AddEventForm
-              onClick={e => {
-                e.stopPropagation();
-              }}
-              onSubmit={e => this._onModalFormSubmit(e)}
-            >
-              <EventNameContainer>
-                <NameLabel htmlFor="name">event name</NameLabel>
-                <NameInput
-                  onChange={e =>
-                    this._handleInputChange("eventName", e.target.value)
-                  }
-                  id="name"
-                  type="text"
-                  value={this.state.eventDetail.eventName}
-                />
-              </EventNameContainer>
-              <EventDateModal>
-                <DatePicker
-                  onChange={date => this._onDateChange(date)}
-                  value={this.state.date}
-                  required
-                  minDate={new window.Date()}
-                />
-              </EventDateModal>
-              <EventLocation>
-                <LocationLabel htmlFor="location">location</LocationLabel>
-                <LocationInput
-                  onChange={e =>
-                    this._handleInputChange("eventLocation", e.target.value)
-                  }
-                  id="location"
-                  type="text"
-                  value={this.state.eventDetail.eventLocation}
-                />
-              </EventLocation>
-              <EventCapacity>
-                <EventCapacityLabel htmlFor="capacity">
-                  capacity
-                </EventCapacityLabel>
-                <EventCapacityInput
-                  onChange={e =>
-                    this._handleInputChange(
-                      "eventCapacity",
-                      parseInt(e.target.value)
-                    )
-                  }
-                  id="capacity"
-                  type="number"
-                  min="0"
-                  value={
-                    !!this.state.eventDetail.eventCapacity
-                      ? this.state.eventDetail.eventCapacity
-                      : 0
-                  }
-                />
-              </EventCapacity>
-              <EventAttendees>
-                <EventAttendeesLabel htmlFor="attendees">
-                  attendees
-                </EventAttendeesLabel>
-                <EventAttendeesInput
-                  onChange={e =>
-                    this._handleInputChange(
-                      "eventAttendees",
-                      parseInt(e.target.value)
-                    )
-                  }
-                  id="attendees"
-                  type="number"
-                  min="0"
-                  value={
-                    !!this.state.eventDetail.eventAttendees
-                      ? this.state.eventDetail.eventAttendees
-                      : 0
-                  }
-                />
-              </EventAttendees>
-              <SubmitButton type="submit" value="Submit" />
-              <CloseIconContainerModal
-                onClick={() => {
-                  this.setState({
-                    showModalForm: false,
-                    eventDetail: {
-                      eventName: "",
-                      eventLocation: "",
-                      eventCapacity: "",
-                      eventAttendees: 0
-                    }
-                  });
-                }}
-              >
-                <MdClose />
-              </CloseIconContainerModal>
-              {this.state.modalFormError && (
-                <ErrorContainer>{this.state.errorMessage}</ErrorContainer>
-              )}
-            </AddEventForm>
-          </ModalContainer>
+          <Modal {...componentProps} />
         )}
         <Wrapper>
           <Header>
@@ -1366,141 +1278,6 @@ const InActiveContainer = styled.div`
 
 const ActiveContainer = styled.div`
   cursor: pointer;
-`;
-
-const ModalContainer = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 10;
-`;
-
-const AddEventForm = styled.form`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  background: #fff;
-  padding: 22px;
-  transform: translate(-50%, -50%);
-  border-radius: 2px;
-
-  label,
-  input {
-    color: rgb(119, 130, 158);
-    text-transform: capitalize;
-    font-size: 12px;
-  }
-
-  input {
-    text-transform: initial;
-  }
-
-  label {
-    margin-right: 11px;
-  }
-`;
-
-const EventNameContainer = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const CloseIconContainerModal = styled.div`
-  cursor: pointer;
-
-  svg {
-    position: absolute;
-    right: -9px;
-    top: -9px;
-    font-size: 20px;
-    background: rgb(117, 102, 243);
-    padding: 3px;
-    border-radius: 50%;
-    color: #fff;
-  }
-`;
-
-const NameLabel = styled.label``;
-
-const NameInput = styled.input`
-  border: 1px solid rgb(119, 130, 158);
-`;
-const EventDateModal = styled.div`
-  margin-bottom: 15px;
-
-  .react-date-picker,
-  .react-date-picker__wrapper {
-    width: 100%;
-  }
-
-  .react-date-picker__calendar {
-    width: 300px !important;
-    left: -22px !important;
-  }
-
-  svg {
-    color: rgb(117, 102, 243);
-  }
-`;
-
-const EventLocation = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const LocationLabel = styled.label``;
-
-const LocationInput = styled.input`
-  border: 1px solid rgb(119, 130, 158);
-`;
-
-const EventCapacity = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const EventCapacityLabel = styled.label``;
-
-const EventCapacityInput = styled.input`
-  border: 1px solid rgb(119, 130, 158);
-`;
-
-const EventAttendees = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const EventAttendeesLabel = styled.label``;
-
-const EventAttendeesInput = styled.input`
-  border: 1px solid rgb(119, 130, 158);
-`;
-
-const SubmitButton = styled.input`
-  border: none;
-  width: 100%;
-  padding: 8px;
-  border-radius: 3px;
-  cursor: pointer;
-  outline: none;
-`;
-
-const ErrorContainer = styled.span`
-  color: #ff0000;
-  font-size: 10px;
-  margin-top: 5px;
-  display: block;
-  position: absolute;
-  bottom: 5px;
 `;
 
 export default App;
