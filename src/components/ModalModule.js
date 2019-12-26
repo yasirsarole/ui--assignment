@@ -7,7 +7,7 @@ import {
   MdClose
 } from "react-icons/md";
 
-const Modal = ({
+const ModalModule = ({
   _onModalContainerClick,
   _onModalFormSubmit,
   _handleInputChange,
@@ -225,4 +225,4 @@ const ErrorContainer = styled.span`
   bottom: 5px;
 `;
 
-export default Modal;
+export default ModalModule;

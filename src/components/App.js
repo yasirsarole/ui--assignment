@@ -22,7 +22,8 @@ import { IoMdMan } from "react-icons/io";
 import { FiPlus, FiSearch, FiGrid, FiMinus } from "react-icons/fi";
 
 // import components
-import Modal from "./Modal";
+import ModalModule from "./ModalModule";
+import HeaderModule from "./HeaderModule";
 
 class App extends React.Component {
   constructor(props) {
@@ -438,7 +439,7 @@ class App extends React.Component {
         eventAttendees: 0
       }
     });
-  }
+  };
 
   render() {
     const $this = this;
@@ -446,71 +447,13 @@ class App extends React.Component {
       ...$this,
       ...$this.state,
       ...$this.props
-    }
+    };
 
     return (
       <MainContainer>
-        {this.state.showModalForm && (
-          <Modal {...componentProps} />
-        )}
+        {this.state.showModalForm && <ModalModule {...componentProps} />}
         <Wrapper>
-          <Header>
-            <Hamburger>
-              {!this.state.hamburgerActive && (
-                <InActiveContainer onClick={() => this._hamburgerToggle()}>
-                  <GiHamburgerMenu />
-                </InActiveContainer>
-              )}
-              {this.state.hamburgerActive && (
-                <ActiveContainer onClick={() => this._hamburgerToggle()}>
-                  <MdClose />
-                </ActiveContainer>
-              )}
-            </Hamburger>
-            {this.state.hamburgerActive && (
-              <CommunityHeaderContainer>
-                <CommunityHeading>
-                  community<CommunityHeading>manager</CommunityHeading>
-                </CommunityHeading>
-                <Navigation>
-                  <NavListContainer>
-                    <NavListItem>
-                      <MdDashboard />
-                      <NavItem href="#Fixme">dashboard</NavItem>
-                    </NavListItem>
-                    <NavListItem className="active">
-                      <MdEvent />
-                      <NavItem href="#Fixme">events</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <FaStar />
-                      <NavItem href="#Fixme">facilities</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <TiNews />
-                      <NavItem href="#Fixme">news</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <GiScrewdriver />
-                      <NavItem href="#Fixme">maintenance</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <GoSignIn />
-                      <NavItem href="#Fixme">sign ins</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <FaUsers />
-                      <NavItem href="#Fixme">users</NavItem>
-                    </NavListItem>
-                    <NavListItem>
-                      <MdSettings />
-                      <NavItem href="#Fixme">settings</NavItem>
-                    </NavListItem>
-                  </NavListContainer>
-                </Navigation>
-              </CommunityHeaderContainer>
-            )}
-          </Header>
+          <HeaderModule {...componentProps} />
           <Main>
             <NewEventPanel>
               <AddEvent
@@ -641,16 +584,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const Header = styled.header`
-  padding-top: 21px;
-  flex-basis: 13.3%;
-
-  @media (max-width: 1024px) {
-    text-align: center;
-    position: relative;
-  }
-`;
-
 const Main = styled.main`
   flex-basis: 86.5%;
   display: inline-flex;
@@ -658,101 +591,6 @@ const Main = styled.main`
   @media (max-width: 1024px) {
     display: block;
   }
-`;
-
-const CommunityHeaderContainer = styled.div`
-  @media (max-width: 1024px) {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    z-index: 5;
-    padding-bottom: 15px;
-  }
-`;
-
-const CommunityHeading = styled.span`
-  color: rgb(119, 130, 158);
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 10px;
-  display: inline-block;
-  margin-bottom: 55px;
-
-  @media (max-width: 1024px) {
-    margin-bottom: 30px;
-  }
-
-  span {
-    color: rgb(117, 102, 243);
-    margin-bottom: 0;
-  }
-`;
-
-const Navigation = styled.nav`
-  height: calc(100vh - 86px);
-  position: relative;
-
-  @media (max-width: 1024px) {
-    height: auto;
-  }
-`;
-
-const NavListContainer = styled.ul`
-  @media (max-width: 1024px) {
-    display: inline-block;
-  }
-`;
-
-const NavListItem = styled.li`
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  &:last-of-type {
-    margin-bottom: 0;
-    position: absolute;
-    bottom: 24px;
-
-    @media (max-width: 1024px) {
-      position: unset;
-    }
-  }
-
-  &:hover,
-  &.active {
-    a,
-    svg {
-      color: rgb(117, 102, 243);
-      font-weight: bold;
-    }
-
-    &::before {
-      content: "";
-      width: 3px;
-      height: 3px;
-      background-color: rgb(117, 102, 243);
-      border-radius: 50%;
-      position: absolute;
-      z-index: 5;
-      left: -8px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-
-  svg {
-    color: rgb(119, 130, 158);
-  }
-`;
-
-const NavItem = styled.a`
-  margin-left: 15px;
-  color: rgb(119, 130, 158);
-  text-transform: capitalize;
-  font-size: 12px;
-  text-decoration: none;
 `;
 
 const NewEventPanel = styled.div`
@@ -1258,26 +1096,5 @@ const DeleteIconContainer = styled.div`
 `;
 
 const ListContainerTable = styled.div``;
-
-const Hamburger = styled.div`
-  display: none;
-  margin-bottom: 10px;
-  color: rgb(117, 102, 243);
-  font-size: 30px;
-
-  @media (max-width: 1024px) {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-`;
-
-const InActiveContainer = styled.div`
-  cursor: pointer;
-`;
-
-const ActiveContainer = styled.div`
-  cursor: pointer;
-`;
 
 export default App;
