@@ -51,7 +51,6 @@ class App extends React.Component {
       eventsListData: JSON.parse(localStorage.getItem("data")),
       addEvent: false,
       editEvent: false,
-      deleteEvent: false,
       currentEventID: ""
     };
   }
@@ -235,6 +234,9 @@ class App extends React.Component {
                   ...temp.eventsListData.upcoming,
                   type
                 ];
+
+                temp.all = false;
+                temp.upcoming = true;
               } else {
                 temp.eventsListData[listType].splice(index, 1);
 
@@ -242,6 +244,9 @@ class App extends React.Component {
                   ...temp.eventsListData.current,
                   type
                 ];
+
+                temp.all = true;
+                temp.upcoming = false;
               }
             }
           });
@@ -285,6 +290,7 @@ class App extends React.Component {
   // helper function for editing event
   _onEditEvent = eventID => {
     const temp = { ...this.state };
+
     let name, allowedAttendees, totalAttendees, location, date;
 
     Object.keys(this.state.eventsListData).forEach(listType => {
@@ -315,6 +321,28 @@ class App extends React.Component {
     this.setState({
       ...temp
     });
+  };
+
+  _onDeleteEvent = eventID => {
+    if (window.confirm("Are you sure?")) {
+      const temp = { ...this.state };
+
+      Object.keys(this.state.eventsListData).forEach(listType => {
+        this.state.eventsListData[listType].forEach((type, index) => {
+          if (type.id === eventID) {
+            temp.eventsListData[listType].splice(index, 1);
+          }
+        });
+      });
+
+      this.setState({ ...temp }, () => {
+        // call this function to update event counts
+        this._geteventsDataCount();
+
+        // filter list data when event is added
+        this._filterEvents("all");
+      });
+    }
   };
 
   // get events list based on filter
@@ -379,7 +407,10 @@ class App extends React.Component {
                   >
                     <MdEdit />
                   </EditIconContainer>
-                  <DeleteIconContainer title="Delete Event">
+                  <DeleteIconContainer
+                    onClick={() => this._onDeleteEvent(data.id)}
+                    title="Delete Event"
+                  >
                     <FiMinus />
                   </DeleteIconContainer>
                 </FeedBackEditContainer>

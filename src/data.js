@@ -1,3 +1,5 @@
+const dateObj = new window.Date();
+
 const eventsData = {
   current: [
     {
@@ -817,7 +819,7 @@ const eventsData = {
     {
       id: 81,
       name: "Bowls",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
@@ -827,7 +829,7 @@ const eventsData = {
     {
       id: 82,
       name: "Salsa dance classes",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
@@ -837,7 +839,7 @@ const eventsData = {
     {
       id: 83,
       name: "Meditation",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
@@ -847,7 +849,7 @@ const eventsData = {
     {
       id: 84,
       name: "Bowls",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
@@ -857,7 +859,7 @@ const eventsData = {
     {
       id: 85,
       name: "Monthly Chess competition",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
@@ -867,7 +869,7 @@ const eventsData = {
     {
       id: 86,
       name: "Bowls",
-      date: new window.Date("24-12-2019"),
+      date: dateObj.setDate(dateObj.getDate() - 1),
       time: "7:00pm - 8:00pm",
       repeats: 12,
       location: "Level 5, Building A",
