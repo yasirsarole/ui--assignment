@@ -431,7 +431,13 @@ class App extends React.Component {
           <ModalContainer
             onClick={() => {
               this.setState({
-                showModalForm: false
+                showModalForm: false,
+                eventDetail: {
+                  eventName: "",
+                  eventLocation: "",
+                  eventCapacity: "",
+                  eventAttendees: 0
+                }
               });
             }}
           >
@@ -484,6 +490,7 @@ class App extends React.Component {
                   }
                   id="capacity"
                   type="number"
+                  min="0"
                   value={
                     !!this.state.eventDetail.eventCapacity
                       ? this.state.eventDetail.eventCapacity
@@ -504,6 +511,7 @@ class App extends React.Component {
                   }
                   id="attendees"
                   type="number"
+                  min="0"
                   value={
                     !!this.state.eventDetail.eventAttendees
                       ? this.state.eventDetail.eventAttendees
@@ -515,7 +523,13 @@ class App extends React.Component {
               <CloseIconContainerModal
                 onClick={() => {
                   this.setState({
-                    showModalForm: false
+                    showModalForm: false,
+                    eventDetail: {
+                      eventName: "",
+                      eventLocation: "",
+                      eventCapacity: "",
+                      eventAttendees: 0
+                    }
                   });
                 }}
               >
@@ -706,7 +720,7 @@ const MainContainer = styled.div`
 
 const Wrapper = styled.div`
   width: 96%;
-  max-width: 1127px;
+  max-width: 1286px;
   margin: 0 auto;
   display: flex;
 
@@ -1411,8 +1425,9 @@ const CloseIconContainerModal = styled.div`
 
 const NameLabel = styled.label``;
 
-const NameInput = styled.input``;
-
+const NameInput = styled.input`
+  border: 1px solid rgb(119, 130, 158);
+`;
 const EventDateModal = styled.div`
   margin-bottom: 15px;
 
@@ -1440,7 +1455,9 @@ const EventLocation = styled.div`
 
 const LocationLabel = styled.label``;
 
-const LocationInput = styled.input``;
+const LocationInput = styled.input`
+  border: 1px solid rgb(119, 130, 158);
+`;
 
 const EventCapacity = styled.div`
   margin-bottom: 15px;
@@ -1451,7 +1468,9 @@ const EventCapacity = styled.div`
 
 const EventCapacityLabel = styled.label``;
 
-const EventCapacityInput = styled.input``;
+const EventCapacityInput = styled.input`
+  border: 1px solid rgb(119, 130, 158);
+`;
 
 const EventAttendees = styled.div`
   margin-bottom: 15px;
@@ -1462,7 +1481,9 @@ const EventAttendees = styled.div`
 
 const EventAttendeesLabel = styled.label``;
 
-const EventAttendeesInput = styled.input``;
+const EventAttendeesInput = styled.input`
+  border: 1px solid rgb(119, 130, 158);
+`;
 
 const SubmitButton = styled.input`
   border: none;
@@ -1478,6 +1499,8 @@ const ErrorContainer = styled.span`
   font-size: 10px;
   margin-top: 5px;
   display: block;
+  position: absolute;
+  bottom: 5px;
 `;
 
 export default App;
