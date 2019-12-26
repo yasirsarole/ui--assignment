@@ -37,7 +37,7 @@ class App extends React.Component {
       showModalForm: false,
       date: new window.Date(),
       modalFormError: false,
-      errorMessage: "All the fields are compulsory.",
+      errorMessage: "Event name, location and capacity are mandatory.",
       eventDetail: {
         eventName: "",
         eventLocation: "",
