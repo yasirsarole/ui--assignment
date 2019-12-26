@@ -3,9 +3,7 @@ import styled from "styled-components";
 import DatePicker from "react-date-picker";
 
 // import icons
-import {
-  MdClose
-} from "react-icons/md";
+import { MdClose } from "react-icons/md";
 
 const ModalModule = ({
   _onModalContainerClick,
@@ -88,7 +86,6 @@ const ModalModule = ({
     </ModalContainer>
   );
 };
-
 
 const ModalContainer = styled.div`
   position: fixed;
