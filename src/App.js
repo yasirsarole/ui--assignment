@@ -25,10 +25,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // check if browser supports local storage
-    if (typeof Storage !== "undefined")
-      localStorage.setItem("data", JSON.stringify(eventsData));
-
     this.state = {
       totalEvents: 0,
       upcomingEvents: 0,
@@ -39,7 +35,7 @@ class App extends React.Component {
       upcoming: false,
       outdated: false,
       showModalForm: false,
-      date: new window.Date("YYYY-MM-DDTHH:mm:ss:sssZ"),
+      date: new window.Date(),
       modalFormError: false,
       errorMessage: "All the fields are compulsory.",
       eventDetail: {
@@ -48,7 +44,9 @@ class App extends React.Component {
         eventCapacity: "",
         eventAttendees: 0
       },
-      eventsListData: JSON.parse(localStorage.getItem("data")),
+      eventsListData: JSON.parse(localStorage.getItem("data"))
+        ? JSON.parse(localStorage.getItem("data"))
+        : eventsData,
       addEvent: false,
       editEvent: false,
       currentEventID: ""
@@ -56,6 +54,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // check if browser supports local storage
+    if (typeof Storage !== "undefined")
+      localStorage.setItem("data", JSON.stringify(eventsData));
+
     // get events data count
     this._geteventsDataCount();
 
