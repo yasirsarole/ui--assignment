@@ -340,7 +340,8 @@ class App extends React.Component {
         eventLocation: "",
         eventCapacity: "",
         eventAttendees: 0
-      }
+      },
+      date: new window.Date()
     });
   };
 
